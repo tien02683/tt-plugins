@@ -1492,6 +1492,124 @@
 `
       },
       {
+        slug: "tt-architecture",
+        title: "TT Architecture 3.2 (BIM & Tự Động Dựng Hình CAD Sang 3D)",
+        category: "CAD",
+        summary: "Tự động hóa toàn diện quy trình dựng hình 3D từ bản vẽ CAD 2D trong SketchUp: Vá hở đường nét, đẩy khối tường, sinh hệ kết cấu cột dầm sàn móng và tự động đục lỗ cửa Xingfa 55.",
+        version: "3.0.1",
+        compatibility: ["SketchUp 2021", "SketchUp 2022", "SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro · Dùng thử 15 ngày",
+        featured: true,
+        updated_at: "09/11/2026",
+        tags: ["BIM SketchUp", "CAD sang 3D", "Vá Hở CAD", "Cột Dầm Sàn", "Cửa Xingfa 55", "Dự Toán Khối Lượng"],
+        video_url: "https://youtu.be/R4bQuSkYpqs",
+        plugin_file: "tt_architecture_v3.0.1.rbz",
+        download_url: "https://www.dropbox.com/scl/fi/du91p7z24rehq4mto6v01/tt_architecture_v3.0.1.rbz?rlkey=b74k22hwaigij57fpcia5w5ku&st=w2lywvqn&dl=1",
+        release_url: "https://github.com/storytold/tt-plugins/releases",
+        coverImage: "images/tt-architecture/slide_01_intro.png",
+        articleHtml: `
+          <h2>Tổng Quan Về TT Architecture 3.2 (FaceUp BIM Suite)</h2>
+          <p>
+            Dựng lại mô hình 3D từ bản vẽ CAD 2D kỹ thuật là công đoạn tiêu tốn nhiều thời gian nhất của kiến trúc sư và kỹ sư. 
+            <strong>TT Architecture 3.2 (FaceUp BIM Suite)</strong> là bộ công cụ tự động hóa toàn diện được hợp tác phát triển bởi 
+            <strong>Anh Văn & Minh Tiến</strong>, mang lại quy trình <em>"1-Click"</em> chuyển đổi file DWG/DXF 2D thành mô hình 
+            kiến trúc & kết cấu 3D hoàn chỉnh trên nền tảng SketchUp 2021 – 2027 (Ruby 3.4 & C++).
+          </p>
+
+          <!-- IMAGE GALLERY SHOWCASE (6 SLIDES) -->
+          <div style="margin: 28px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-architecture/slide_01_intro.png" onerror="this.src='public/images/tt-architecture/slide_01_intro.png';" style="width: 100%; height: auto; display: block;" alt="TT Architecture Intro" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                1. Giải pháp BIM & 1-Click CAD 2D sang 3D
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-architecture/slide_02_cad_healing.png" onerror="this.src='public/images/tt-architecture/slide_02_cad_healing.png';" style="width: 100%; height: auto; display: block;" alt="Vá hở CAD & Summon Faces" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                2. Vá hở đường nét CAD & Tạo mặt siêu tốc
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-architecture/slide_03_structure_bim.png" onerror="this.src='public/images/tt-architecture/slide_03_structure_bim.png';" style="width: 100%; height: auto; display: block;" alt="Kết cấu BIM Cột Dầm Sàn" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                3. Hệ kết cấu tham số Cột, Dầm Ray-cast, Sàn, Móng
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-architecture/slide_04_smart_wall_doors.png" onerror="this.src='public/images/tt-architecture/slide_04_smart_wall_doors.png';" style="width: 100%; height: auto; display: block;" alt="Tường thông minh & Cửa Xingfa" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                4. Nhận diện bề dày tường & Đục lỗ cửa Xingfa 55
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-architecture/slide_05_quantity_bim.png" onerror="this.src='public/images/tt-architecture/slide_05_quantity_bim.png';" style="width: 100%; height: auto; display: block;" alt="Bóc tách khối lượng BIM" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                5. Bóc tách khối lượng tự động & Ván khuôn cốp pha
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-architecture/slide_06_specs_outro.png" onerror="this.src='public/images/tt-architecture/slide_06_specs_outro.png';" style="width: 100%; height: auto; display: block;" alt="Tương thích SketchUp" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                6. Tương thích SU 2021 – 2027 & Song ngữ Việt - Anh
+              </div>
+            </div>
+          </div>
+
+          <h2>6 Tính Năng Cốt Lõi Trên TT Architecture 3.2</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin: 20px 0;">
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">1. Smart Gap Finder & Auto Fill Hole</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Tự động tìm kiếm và hàn kín mọi khe hở cạnh li ti từ 0.1mm - 50mm thường gặp trong bản vẽ AutoCAD, đảm bảo mọi đường bao khép kín tuyệt đối để tạo mặt.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">2. Summon Faces & Batch Group Face Extruder</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Tạo mặt phẳng tức thì cho các khu vực giao cắt và đẩy khối đồng loạt hàng trăm mảng tường theo chiều cao chỉ định chỉ trong 1 cú click.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">3. Hệ Cấu Kiện Kết Cấu Parametric (Cột, Dầm Ray-cast, Móng, Sàn)</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Tự động nhận diện lưới trục định vị, đặt cột đúng tim, dầm tự động dò tìm đỉnh cột bằng tia Ray-casting để liên kết thành khung chịu lực, sinh móng đơn/móng băng và đổ sàn chuẩn cao độ.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">4. Đục Lỗ Cửa Thông Minh & Lắp Cửa Xingfa 55</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Tự động phân loại bề dày tường (100, 200, 220mm), đục xuyên 2 mặt tường chuẩn xác không vỡ khối, tự bổ sung giằng lanh-tô và lắp đặt cửa nhôm kính Xingfa hệ 55 hoặc cửa gỗ.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">5. Bóc Tách Khối Lượng Tự Động & Formwork Generator</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Thống kê chính xác diện tích tường xây (m²), thể tích bê tông cột/dầm/sàn (m³), diện tích cốp pha ván khuôn và bảng kê chi tiết số lượng cửa sổ, cửa đi để xuất dữ liệu Excel/CSV.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">6. Tương Thích Tuyệt Đối & Giao Diện Song Ngữ</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Hỗ trợ toàn diện từ SketchUp 2021 đến 2027 với nền tảng Ruby 3.4 & C++ Core. Giao diện song ngữ Tiếng Việt & Tiếng Anh thân thiện, phân chia Tag/Layer chuẩn hóa IFC/BIM.</p>
+              </div>
+            </div>
+          </div>
+`
+      },
+      {
         slug: "tt-multi-view",
         title: "TT Multi View (Đồng Bộ 4 Cửa Sổ)",
         category: "Workflow",
@@ -1767,7 +1885,7 @@
       if (p.download_url) {
         dlBtn.href = p.download_url;
         dlBtn.setAttribute('target', '_blank');
-        dlBtn.innerHTML = `<span class="material-symbols-rounded">download</span> TẢI FILE CÀI ĐẶT (${p.slug === 'tt-bevel-studio' ? 'TT_Bevel_v2.0.0.rbz' : p.slug + '.rbz'})`;
+        dlBtn.innerHTML = `<span class="material-symbols-rounded">download</span> TẢI FILE CÀI ĐẶT (${p.plugin_file || (p.slug === 'tt-bevel-studio' ? 'TT_Bevel_v2.0.0.rbz' : p.slug + '.rbz')})`;
         dlBtn.onclick = null;
         if (dlNote) dlNote.style.display = 'flex';
       } else {
@@ -1840,7 +1958,7 @@
       document.getElementById('detail-article-content').innerHTML = p.articleHtml;
 
       // Specs
-      document.getElementById('spec-filename').innerText = p.slug === 'tt-bevel-studio' ? 'TT_Bevel_v2.0.0.rbz (799 KB)' : `${p.slug}.rbz`;
+      document.getElementById('spec-filename').innerText = p.plugin_file ? `${p.plugin_file} (6.2 MB)` : (p.slug === 'tt-bevel-studio' ? 'TT_Bevel_v2.0.0.rbz (799 KB)' : `${p.slug}.rbz`);
       document.getElementById('spec-compat').innerText = (p.compatibility || []).join(', ');
       document.getElementById('spec-license').innerText = p.price_type === 'paid' ? 'Bản quyền Pro' : 'Bản Miễn phí';
 
