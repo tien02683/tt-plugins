@@ -1,0 +1,178 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const plugins = await getCollection("plugins", ({ data }) => data.published);
+  return plugins.map((plugin) => ({ params: { slug: plugin.data.slug }, props: { plugin } }));
+}
+const { plugin } = Astro.props;
+const { Content } = await render(plugin);
+const d = plugin.data;
+const download = d.download_url || d.plugin_file || d.release_url;
+
+// Helper to convert YouTube URL to embed
+function getYouTubeEmbed(url: string) {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? `https://www.youtube-nocookie.com/embed/${match[2]}` : null;
+}
+const embedUrl = getYouTubeEmbed(d.video_url);
+---
+<BaseLayout title={`${d.title} — TT Plugins`} description={d.summary}>
+  <Header />
+  <main class="product-page">
+    <div class="container">
+      <div class="breadcrumbs">
+        <a href="/">Trang chủ</a><span>/</span>
+        <a href="/#plugins">Plugins</a><span>/</span>
+        <b>{d.title}</b>
+      </div>
+
+      <div class="product-hero">
+        <div class="product-intro">
+          <div class="eyebrow dark-eyebrow">{d.category.toUpperCase()} · TT PLUGINS</div>
+          <h1>{d.title}</h1>
+          <p class="product-summary">{d.summary}</p>
+          <div class="product-tags">
+            <span class:list={["price-tag", d.price_type]}>{d.price_label}</span>
+            <span>VERSION {d.version}</span>
+            <span>UPDATED {d.updated_at.toLocaleDateString("vi-VN")}</span>
+          </div>
+          <div class="product-actions">
+            {download ? (
+              <a class="btn btn-primary" href={download} target="_blank" rel="noopener noreferrer">
+                Tải plugin (.rbz) <span>↓</span>
+              </a>
+            ) : (
+              <span class="btn btn-disabled">Chưa có file tải</span>
+            )}
+            {d.release_url && (
+              <a class="btn btn-outline" href={d.release_url} target="_blank" rel="noopener noreferrer">
+                Release notes ↗
+              </a>
+            )}
+          </div>
+          {!download && (
+            <p class="download-note">Chủ website cần cập nhật URL tải file RBZ trong CMS trước khi phát hành.</p>
+          )}
+        </div>
+        <div class="product-cover">
+          <img src={d.featured_image} alt={`Ảnh ${d.title}`} />
+        </div>
+      </div>
+
+      <div class="product-layout">
+        <article class="prose">
+          {embedUrl && (
+            <div class="video-section">
+              <div class="content-eyebrow">VIDEO DEMO & HƯỚNG DẪN</div>
+              <div class="video-container">
+                <iframe
+                  src={embedUrl}
+                  title={d.video_title || `Video demo ${d.title}`}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          )}
+
+          {d.gallery && d.gallery.length > 0 && (
+            <div class="gallery-section">
+              <div class="content-eyebrow">HÌNH ẢNH MÔ HÌNH & GIAO DIỆN</div>
+              <div class="gallery-grid">
+                {d.gallery.map((img: string, i: number) => (
+                  <a href={img} target="_blank" class="gallery-item">
+                    <img src={img} alt={`Screenshot ${i + 1}`} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div class="content-eyebrow">ABOUT THIS EXTENSION</div>
+          <Content />
+        </article>
+
+        <aside class="product-sidebar">
+          <div class="side-panel">
+            <h3>Thông tin plugin</h3>
+            <dl>
+              <dt>Phiên bản</dt>
+              <dd>{d.version}</dd>
+              <dt>Danh mục</dt>
+              <dd>{d.category}</dd>
+              <dt>Giá</dt>
+              <dd>{d.price_label}</dd>
+              <dt>Tương thích</dt>
+              <dd>{d.compatibility.join(", ")}</dd>
+              <dt>Cập nhật</dt>
+              <dd>{d.updated_at.toLocaleDateString("vi-VN")}</dd>
+            </dl>
+          </div>
+          <div class="side-panel">
+            <h3>Tags</h3>
+            <div class="tag-cloud">
+              {d.tags.map((tag: string) => <span>{tag}</span>)}
+            </div>
+          </div>
+          <a class="back-link" href="/#plugins">← Quay lại thư viện plugin</a>
+        </aside>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .video-section {
+    margin-bottom: 36px;
+  }
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .gallery-section {
+    margin-bottom: 36px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    aspect-ratio: 16/10;
+    display: block;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.04);
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const plugins = (await getCollection("plugins", ({ data }) => data.published))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.updated_at.valueOf() - a.data.updated_at.valueOf());
+const categories = [...new Set(plugins.map((p) => p.data.category))];
+const featured = plugins.find((p) => p.data.featured) ?? plugins[0];
+---
+<BaseLayout title="TT Plugins — Công cụ SketchUp chuyên nghiệp" description="Khám phá plugin SketchUp do TT Plugins phát triển.">
+  <Header />
+  <main>
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="container hero-content">
+        <div class="eyebrow"><span class="pulse"></span> SKETCHUP EXTENSIONS · BUILT WITH PURPOSE</div>
+        <h1>Make SketchUp<br /><em>work smarter.</em></h1>
+        <p class="hero-copy">Những công cụ được thiết kế để tối ưu quy trình, tăng tốc thao tác và mở rộng khả năng làm việc trong SketchUp.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#plugins">Khám phá plugins <span>→</span></a>
+          <a class="btn btn-ghost" href="#about">Tìm hiểu TT Plugins</a>
+        </div>
+        <div class="hero-meta"><span><b>{plugins.length.toString().padStart(2, "0")}</b> sản phẩm đang giới thiệu</span><i></i><span>SketchUp · Ruby Extensions</span></div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+        <div class="visual-core"><div class="core-top">TT</div><div class="core-bottom">PLUGIN<br />ENGINE</div></div>
+        <div class="float-card float-a"><span class="float-icon">◫</span><span><b>Workflow</b><small>Smarter tools</small></span></div>
+        <div class="float-card float-b"><span class="float-icon blue"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">terminal</span></span><span><b>Ruby API</b><small>Built for SketchUp</small></span></div>
+        <div class="visual-caption">DESIGNED FOR DESIGNERS</div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="container trust-inner"><span>DESIGNED FOR SKETCHUP</span><span>●</span><span>WORKFLOW FIRST</span><span>●</span><span>CONTINUOUS IMPROVEMENT</span><span>●</span><span>BY TT PLUGINS</span></div>
+    </section>
+
+    <section class="section plugins-section" id="plugins">
+      <div class="container">
+        <div class="section-heading">
+          <div><div class="eyebrow dark-eyebrow">THE EXTENSION LIBRARY</div><h2>Explore our <em>plugins.</em></h2><p>Công cụ phù hợp cho từng bước trong quy trình thiết kế và dựng mô hình.</p></div>
+          <div class="catalog-count"><b>{plugins.length.toString().padStart(2, "0")}</b><span>EXTENSIONS</span></div>
+        </div>
+        <div class="catalog-tools">
+          <label class="search-box"><span><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">search</span></span><input id="plugin-search" type="search" placeholder="Tìm plugin theo tên hoặc tính năng..." aria-label="Tìm plugin" /></label>
+          <div class="filter-list">
+            <button class="filter-chip active" data-filter="all">Tất cả</button>
+            {categories.map((category) => <button class="filter-chip" data-filter={category}>{category}</button>)}
+          </div>
+        </div>
+        <div class="plugin-grid" id="plugin-grid">
+          {plugins.map((plugin) => (
+            <article class="plugin-card" data-category={plugin.data.category} data-search={`${plugin.data.title} ${plugin.data.summary} ${plugin.data.tags.join(" ")}`.toLowerCase()}>
+              <a class="plugin-image" href={`/plugins/${plugin.data.slug}/`}>
+                <img src={plugin.data.featured_image} alt={`Ảnh giới thiệu ${plugin.data.title}`} loading="lazy" />
+                <span class="image-arrow">↗</span>
+                {plugin.data.featured && <span class="featured-label">FEATURED</span>}
+              </a>
+              <div class="plugin-card-body">
+                <div class="card-topline"><span>{plugin.data.category}</span><span class:list={["price-tag", plugin.data.price_type]}>{plugin.data.price_label}</span></div>
+                <h3><a href={`/plugins/${plugin.data.slug}/`}>{plugin.data.title}</a></h3>
+                <p>{plugin.data.summary}</p>
+                <div class="card-bottom"><span>v{plugin.data.version}</span><a href={`/plugins/${plugin.data.slug}/`}>Chi tiết <b>→</b></a></div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="empty-state" id="empty-state" hidden>Không tìm thấy plugin phù hợp. Hãy thử từ khóa khác.</div>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="container about-grid">
+        <div><div class="eyebrow">WHY TT PLUGINS</div><h2>Tools that fit<br /><em>your workflow.</em></h2></div>
+        <div class="about-copy"><p>TT Plugins tập trung phát triển các tiện ích thực tế cho người dùng SketchUp — từ thao tác hình học, quản lý mô hình đến tự động hóa quy trình.</p>
+          <div class="value-list"><div><b>01</b><span><strong>Thực tiễn</strong><small>Ưu tiên giải quyết vấn đề trong công việc hằng ngày.</small></span></div><div><b>02</b><span><strong>Liên tục cải tiến</strong><small>Cập nhật tính năng và khả năng tương thích theo phiên bản SketchUp.</small></span></div><div><b>03</b><span><strong>Minh bạch</strong><small>Thông tin phiên bản, hướng dẫn và thay đổi rõ ràng.</small></span></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="cta-section"><div class="container cta-inner"><div><div class="eyebrow">HAVE A QUESTION?</div><h2>Cùng cải thiện<br /><em>quy trình của bạn.</em></h2></div><a class="btn btn-primary" href="mailto:YOUR-EMAIL@example.com">Liên hệ TT Plugins <span>↗</span></a></div></section>
+  </main>
+  <Footer />
+  <script>
+    const search = document.querySelector('#plugin-search');
+    const cards = [...document.querySelectorAll('.plugin-card')];
+    const chips = [...document.querySelectorAll('.filter-chip')];
+    const empty = document.querySelector('#empty-state');
+    let active = 'all';
+    function filterCards() {
+      const q = (search?.value || '').trim().toLowerCase();
+      let shown = 0;
+      cards.forEach(card => {
+        const matches = (active === 'all' || card.dataset.category === active) && card.dataset.search.includes(q);
+        card.hidden = !matches;
+        if (matches) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    }
+    search?.addEventListener('input', filterCards);
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      active = chip.dataset.filter;
+      chips.forEach(c => c.classList.toggle('active', c === chip));
+      filterCards();
+    }));
+  </script>
+</BaseLayout>

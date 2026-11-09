@@ -1,0 +1,1050 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+<BaseLayout title="Cổng Upload & Quản trị Plugin — TT Plugins" description="Cổng tải lên, cấu hình và xuất bản plugin SketchUp cho hệ thống TT Plugins Store.">
+  <Header />
+  <main class="portal-page">
+    <div class="portal-hero">
+      <div class="container">
+        <div class="portal-badge"><span class="pulse"></span> CỔNG QUẢN TRỊ & XUẤT BẢN NỘI BỘ · TT PLUGINS PORTAL</div>
+        <h1>Cổng Upload & Xuất Bản <em>Plugin Store</em></h1>
+        <p class="portal-lead">Tải lên file cài đặt <code>.rbz</code>, cấu hình thông tin mô hình, tương thích SketchUp và tạo file nội dung Markdown chuẩn cho hệ thống phân phối.</p>
+        <div class="portal-tabs-nav">
+          <a href="#quick-form" class="tab-btn active"><span class="material-symbols-rounded">cloud_upload</span> Form Upload Trực Quan</a>
+          <a href="/admin/" target="_blank" rel="noopener noreferrer" class="tab-btn"><span class="material-symbols-rounded">admin_panel_settings</span> Decap CMS (Git) ↗</a>
+          <a href="#guide" class="tab-btn"><span class="material-symbols-rounded">help</span> Hướng Dẫn & Free Web Host</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container portal-container" id="quick-form">
+      <div class="portal-layout">
+        <!-- FORM BÊN TRÁI -->
+        <section class="portal-form-card">
+          <div class="card-header">
+            <div class="header-icon"><span class="material-symbols-rounded">tune</span></div>
+            <div>
+              <h2>Thông Tin & Cấu Hình Plugin</h2>
+              <p>Điền hoặc kéo thả file <code>.rbz</code> để tự động nhận diện thông số</p>
+            </div>
+          </div>
+
+          <!-- DROPZONE FILE RBZ -->
+          <div class="dropzone" id="rbz-dropzone">
+            <input type="file" id="rbz-file-input" accept=".rbz,.zip" style="display:none;" />
+            <div class="dropzone-content">
+              <span class="material-symbols-rounded drop-icon">inventory_2</span>
+              <p class="drop-title">Kéo & thả file cài đặt <b>.RBZ</b> vào đây, hoặc <span class="drop-browse">chọn file từ máy</span></p>
+              <p class="drop-hint">Hệ thống sẽ tự động bóc tách tên file, gợi ý Slug và Phiên bản</p>
+              <div id="file-info" class="file-info" hidden>
+                <span class="material-symbols-rounded">check_circle</span>
+                <span id="file-name-display">plugin.rbz</span>
+                <span id="file-size-display">(0 KB)</span>
+              </div>
+            </div>
+          </div>
+
+          <form id="plugin-form" class="form-grid">
+            <!-- HÀNG 1: TÊN & SLUG -->
+            <div class="form-group col-8">
+              <label for="p-title">Tên Plugin <span class="req">*</span></label>
+              <input type="text" id="p-title" required placeholder="Ví dụ: TT Bevel 2.0 (Vát Cạnh & Phào Chỉ)" />
+              <small class="field-hint">Tên hiển thị chính trên trang chủ và tiêu đề SEO</small>
+            </div>
+            <div class="form-group col-4">
+              <label for="p-slug">Slug URL <span class="req">*</span></label>
+              <input type="text" id="p-slug" required placeholder="tt-bevel-studio" pattern="[a-z0-9\-]+" />
+              <small class="field-hint">Chỉ dùng chữ thường, số, gạch ngang</small>
+            </div>
+
+            <!-- HÀNG 2: DANH MỤC & PHIÊN BẢN & LOẠI GIÁ -->
+            <div class="form-group col-4">
+              <label for="p-category">Danh mục <span class="req">*</span></label>
+              <select id="p-category">
+                <option value="Modeling">Modeling (Dựng hình)</option>
+                <option value="Geometry">Geometry (Hình học 3D)</option>
+                <option value="Workflow">Workflow (Quy trình)</option>
+                <option value="CAD">CAD & Drafting</option>
+                <option value="AI">AI & Tự động hóa</option>
+                <option value="Architecture">Architecture (Kiến trúc)</option>
+                <option value="Utilities" selected>Utilities (Tiện ích)</option>
+              </select>
+            </div>
+            <div class="form-group col-4">
+              <label for="p-version">Phiên bản <span class="req">*</span></label>
+              <input type="text" id="p-version" value="1.0.0" placeholder="1.0.0" />
+            </div>
+            <div class="form-group col-4">
+              <label for="p-price-type">Phân loại & Giá</label>
+              <div class="input-duo">
+                <select id="p-price-type">
+                  <option value="free">Miễn phí</option>
+                  <option value="paid">Bản Pro</option>
+                </select>
+                <input type="text" id="p-price-label" value="Miễn phí" placeholder="Nhãn giá (Ví dụ: Miễn phí, Bản Pro)" />
+              </div>
+            </div>
+
+            <!-- TÓM TẮT -->
+            <div class="form-group col-12">
+              <label for="p-summary">Mô tả tóm tắt ngắn <span class="req">*</span></label>
+              <textarea id="p-summary" rows="2" required placeholder="Tóm tắt 1-2 câu về tính năng và giá trị cốt lõi của plugin..."></textarea>
+            </div>
+
+            <!-- TƯƠNG THÍCH SKETCHUP -->
+            <div class="form-group col-12">
+              <label>SketchUp Tương thích (Đã kiểm nghiệm)</label>
+              <div class="checkbox-group">
+                <label class="check-item"><input type="checkbox" name="compat" value="SketchUp 2021" /> SU 2021</label>
+                <label class="check-item"><input type="checkbox" name="compat" value="SketchUp 2022" /> SU 2022</label>
+                <label class="check-item"><input type="checkbox" name="compat" value="SketchUp 2023" checked /> SU 2023</label>
+                <label class="check-item"><input type="checkbox" name="compat" value="SketchUp 2024" checked /> SU 2024</label>
+                <label class="check-item"><input type="checkbox" name="compat" value="SketchUp 2026" checked /> SU 2026</label>
+                <label class="check-item"><input type="checkbox" name="compat" value="SketchUp 2027" checked /> SU 2027 (Ruby 3.4)</label>
+              </div>
+            </div>
+
+            <!-- MEDIA: ẢNH ĐẠI DIỆN & GALLERY -->
+            <div class="form-group col-6">
+              <label for="p-image">Ảnh đại diện chính (Cover Image URL)</label>
+              <input type="text" id="p-image" value="/images/plugin-placeholder.svg" placeholder="/images/my-plugin/cover.png hoặc URL ảnh" />
+              <div class="preview-box">
+                <img id="image-preview" src="/images/plugin-placeholder.svg" alt="Preview ảnh" />
+              </div>
+            </div>
+            <div class="form-group col-6">
+              <label for="p-gallery">Thư viện ảnh (Gallery Screenshots)</label>
+              <textarea id="p-gallery" rows="4" placeholder="Mỗi dòng 1 đường dẫn ảnh:/images/plugin/slide_01.png/images/plugin/slide_02.png"></textarea>
+              <small class="field-hint">Nhập mỗi dòng một đường dẫn ảnh minh họa</small>
+            </div>
+
+            <!-- VIDEO YOUTUBE & THÔNG SỐ DOWNLOAD -->
+            <div class="form-group col-6">
+              <label for="p-video">Link Video Demo YouTube (nếu có)</label>
+              <input type="url" id="p-video" placeholder="https://youtu.be/... hoặc https://www.youtube.com/watch?v=..." />
+              <input type="text" id="p-video-title" value="Video demo & Hướng dẫn sử dụng" placeholder="Tiêu đề video" style="margin-top:6px;" />
+            </div>
+            <div class="form-group col-6">
+              <label for="p-download">Link Tải File Trực Tiếp (.RBZ URL)</label>
+              <input type="url" id="p-download" placeholder="URL tải trực tiếp (GitHub Release / Cloudflare R2 / Dropbox dl=1)" />
+              <input type="text" id="p-release" placeholder="URL trang GitHub Releases (tùy chọn)" style="margin-top:6px;" />
+            </div>
+
+            <!-- TAGS & TRẠNG THÁI -->
+            <div class="form-group col-8">
+              <label for="p-tags">Tags (Phân cách bởi dấu phẩy)</label>
+              <input type="text" id="p-tags" placeholder="Bevel, Bo cong, SketchUp 2027, Ruby 3.4, CAD" />
+            </div>
+            <div class="form-group col-4">
+              <label>Tùy chọn xuất bản</label>
+              <div class="toggle-group">
+                <label class="toggle-item"><input type="checkbox" id="p-published" checked /> Xuất bản ngay</label>
+                <label class="toggle-item"><input type="checkbox" id="p-featured" /> Đánh dấu nổi bật</label>
+              </div>
+            </div>
+
+            <!-- HƯỚNG DẪN SỬ DỤNG (MARKDOWN BODY) -->
+            <div class="form-group col-12">
+              <label for="p-body">Nội dung chi tiết & Hướng dẫn sử dụng (Markdown)</label>
+              <textarea id="p-body" rows="8" placeholder="## Giới thiệu tính năng&#10;&#10;Mô tả chi tiết cách cài đặt và sử dụng plugin..."></textarea>
+            </div>
+          </form>
+        </section>
+
+        <!-- KẾT QUẢ & CỔNG XUẤT BẢN BÊN PHẢI -->
+        <aside class="portal-output-card">
+          <div class="card-header">
+            <div class="header-icon blue"><span class="material-symbols-rounded">terminal</span></div>
+            <div>
+              <h3>Cổng Xuất Bản (Export Gateway)</h3>
+              <p>Mã Markdown tự động sinh theo chuẩn Astro</p>
+            </div>
+          </div>
+
+          <!-- ACTIONS BAR -->
+          <div class="output-actions">
+            <button class="btn btn-primary" id="btn-copy-md">
+              <span class="material-symbols-rounded">content_copy</span> Sao chép Markdown
+            </button>
+            <button class="btn btn-outline" id="btn-download-md">
+              <span class="material-symbols-rounded">download</span> Tải file .md
+            </button>
+            <button class="btn btn-publish" id="btn-local-api" title="Gửi trực tiếp đến Cổng Upload Server Node.js (cổng 4322)">
+              <span class="material-symbols-rounded">rocket_launch</span> Xuất bản qua Local Server
+            </button>
+          </div>
+
+          <div id="api-status-banner" class="status-banner" hidden></div>
+
+          <div class="code-preview-wrap">
+            <div class="code-header">
+              <span id="output-filename">src/content/plugins/your-plugin.md</span>
+              <span class="code-badge">Astro Content v5</span>
+            </div>
+            <pre><code id="output-markdown-code">---
+title: "TT Plugin Starter"
+slug: "tt-plugin-starter"
+...
+---</code></pre>
+          </div>
+
+          <!-- THÔNG TIN ĐÍCH ĐẾN -->
+          <div class="destination-guide">
+            <h4><span class="material-symbols-rounded" style="font-size:18px;">folder</span> Đường dẫn lưu trữ trong mã nguồn:</h4>
+            <ul>
+              <li><b>File nội dung:</b> <code>src/content/plugins/[slug].md</code></li>
+              <li><b>Ảnh đại diện & gallery:</b> <code>public/images/[slug]/</code></li>
+              <li><b>File cài đặt (.rbz):</b> <code>public/uploads/</code> hoặc GitHub Release</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <!-- HƯỚNG DẪN TOÀN TẬP DEPLOY VÀ FREE WEB HOST -->
+      <section class="portal-guide-section" id="guide">
+        <div class="guide-card">
+          <h2><span class="material-symbols-rounded">travel_explore</span> Phân Tích & Hướng Dẫn Web Miễn Phí (100% Free Hosting)</h2>
+          <p class="guide-lead">Kiến trúc website <b>TT Plugins</b> được thiết kế tối ưu hóa 100% cho các nền tảng web tĩnh và serverless miễn phí với độ bền và tốc độ cao nhất toàn cầu.</p>
+
+          <div class="grid-3">
+            <div class="guide-box highlight">
+              <div class="box-badge">KHUYÊN DÙNG #1</div>
+              <h3>Cloudflare Pages</h3>
+              <p class="box-desc">Lựa chọn số 1 cho TT Plugins Store:</p>
+              <ul>
+                <li><b>Chi phí:</b> 0đ / Vĩnh viễn miễn phí.</li>
+                <li><b>Băng thông:</b> Không giới hạn (Unlimited Bandwidth).</li>
+                <li><b>Tốc độ:</b> Mạng CDN hơn 300 thành phố (Việt Nam có POP tại Hà Nội & TP.HCM).</li>
+                <li><b>Tự động build:</b> Kết nối GitHub, tự động build Astro mỗi khi push commit.</li>
+                <li><b>Tên miền riêng:</b> Hỗ trợ gắn domain riêng + SSL tự động miễn phí.</li>
+              </ul>
+            </div>
+
+            <div class="guide-box">
+              <div class="box-badge">KHO FILE RBZ #1</div>
+              <h3>GitHub Releases & Pages</h3>
+              <p class="box-desc">Nơi lưu trữ file cài đặt <code>.rbz</code> chuẩn nhất:</p>
+              <ul>
+                <li><b>Miễn phí:</b> Lưu file lên đến 2GB mỗi bản phát hành.</li>
+                <li><b>Tốc độ cao:</b> CDN toàn cầu của GitHub/Amazon S3.</li>
+                <li><b>Ổn định:</b> Link tải trực tiếp vĩnh viễn, người dùng SketchUp tải không bị giới hạn.</li>
+                <li><b>Quản lý version:</b> Tích hợp sẵn Changelog, Tag release (v1.0.0, v2.0.0).</li>
+              </ul>
+            </div>
+
+            <div class="guide-box">
+              <div class="box-badge">QUẢN TRỊ NỘI DUNG</div>
+              <h3>Decap CMS + Local Server</h3>
+              <p class="box-desc">Cổng quản trị trực tiếp tiện lợi:</p>
+              <ul>
+                <li><b>Cổng 1 (Form Portal):</b> Trang này sinh file <code>.md</code> tức thì.</li>
+                <li><b>Cổng 2 (Local Server):</b> Chạy <code>npm run upload-server</code> để tự động ghi file.</li>
+                <li><b>Cổng 3 (Decap CMS):</b> Truy cập <code>/admin/</code> với tài khoản GitHub để quản lý trực tiếp trên trình duyệt.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <Footer />
+
+  <script>
+    // XỬ LÝ FORM VÀ TỰ ĐỘNG SINH MARKDOWN
+    const form = document.getElementById('plugin-form');
+    const pTitle = document.getElementById('p-title');
+    const pSlug = document.getElementById('p-slug');
+    const pCategory = document.getElementById('p-category');
+    const pVersion = document.getElementById('p-version');
+    const pPriceType = document.getElementById('p-price-type');
+    const pPriceLabel = document.getElementById('p-price-label');
+    const pSummary = document.getElementById('p-summary');
+    const pImage = document.getElementById('p-image');
+    const pGallery = document.getElementById('p-gallery');
+    const pVideo = document.getElementById('p-video');
+    const pVideoTitle = document.getElementById('p-video-title');
+    const pDownload = document.getElementById('p-download');
+    const pRelease = document.getElementById('p-release');
+    const pTags = document.getElementById('p-tags');
+    const pPublished = document.getElementById('p-published');
+    const pFeatured = document.getElementById('p-featured');
+    const pBody = document.getElementById('p-body');
+    const imagePreview = document.getElementById('image-preview');
+    const codeEl = document.getElementById('output-markdown-code');
+    const filenameEl = document.getElementById('output-filename');
+    const copyBtn = document.getElementById('btn-copy-md');
+    const downloadBtn = document.getElementById('btn-download-md');
+    const localApiBtn = document.getElementById('btn-local-api');
+    const statusBanner = document.getElementById('api-status-banner');
+
+    // Auto slug from title if slug not typed
+    pTitle.addEventListener('input', () => {
+      if (!pSlug.dataset.manual) {
+        const val = pTitle.value
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+        pSlug.value = val ? `tt-${val.replace(/^tt-/, '')}` : '';
+        updateMarkdown();
+      }
+    });
+
+    pSlug.addEventListener('input', () => {
+      pSlug.dataset.manual = pSlug.value.trim() ? "true" : "";
+      updateMarkdown();
+    });
+
+    // Auto change price label when price type changes
+    pPriceType.addEventListener('change', () => {
+      if (pPriceType.value === 'free') {
+        pPriceLabel.value = 'Miễn phí';
+      } else if (pPriceType.value === 'paid' && pPriceLabel.value === 'Miễn phí') {
+        pPriceLabel.value = 'Bản Pro · Dùng thử 15 ngày';
+      }
+      updateMarkdown();
+    });
+
+    // Preview image
+    pImage.addEventListener('input', () => {
+      imagePreview.src = pImage.value.trim() || '/images/plugin-placeholder.svg';
+      updateMarkdown();
+    });
+
+    function getSelectedCompatibility() {
+      const checked = document.querySelectorAll('input[name="compat"]:checked');
+      return Array.from(checked).map(c => c.value);
+    }
+
+    function generateMarkdown() {
+      const title = pTitle.value.trim() || 'Plugin Mới';
+      const slug = pSlug.value.trim() || 'tt-plugin-slug';
+      const category = pCategory.value;
+      const summary = pSummary.value.trim() || 'Mô tả ngắn của plugin.';
+      const version = pVersion.value.trim() || '1.0.0';
+      const priceType = pPriceType.value;
+      const priceLabel = pPriceLabel.value.trim() || (priceType === 'free' ? 'Miễn phí' : 'Bản Pro');
+      const featImg = pImage.value.trim() || '/images/plugin-placeholder.svg';
+      const compat = getSelectedCompatibility();
+      const video = pVideo.value.trim();
+      const videoTitle = pVideoTitle.value.trim() || 'Video demo & Hướng dẫn sử dụng';
+      const download = pDownload.value.trim();
+      const release = pRelease.value.trim();
+      const published = pPublished.checked;
+      const featured = pFeatured.checked;
+      const today = new Date().toISOString().split('T')[0];
+
+      const rawGallery = pGallery.value.split('\n').map(s => s.trim()).filter(Boolean);
+      const rawTags = pTags.value.split(',').map(s => s.trim()).filter(Boolean);
+      const body = pBody.value.trim() || `## Giới thiệu ${title}\n\nThông tin chi tiết về tính năng và hướng dẫn cài đặt sẽ được cập nhật tại đây.`;
+
+      let md = `---\n`;
+      md += `title: "${title.replace(/"/g, '\\"')}"\n`;
+      md += `slug: "${slug}"\n`;
+      md += `category: "${category}"\n`;
+      md += `summary: "${summary.replace(/"/g, '\\"')}"\n`;
+      md += `version: "${version}"\n`;
+      md += `compatibility:\n`;
+      compat.forEach(c => { md += `  - "${c}"\n`; });
+      md += `price_type: "${priceType}"\n`;
+      md += `price_label: "${priceLabel.replace(/"/g, '\\"')}"\n`;
+      md += `featured_image: "${featImg}"\n`;
+      if (rawGallery.length > 0) {
+        md += `gallery:\n`;
+        rawGallery.forEach(g => { md += `  - "${g}"\n`; });
+      } else {
+        md += `gallery: []\n`;
+      }
+      if (video) {
+        md += `video_url: "${video}"\n`;
+        md += `video_title: "${videoTitle.replace(/"/g, '\\"')}"\n`;
+      }
+      md += `download_url: "${download}"\n`;
+      if (download.endsWith('.rbz')) {
+        md += `plugin_file: "${download.split('/').pop()}"\n`;
+      }
+      md += `release_url: "${release}"\n`;
+      md += `published: ${published}\n`;
+      md += `featured: ${featured}\n`;
+      md += `updated_at: ${today}\n`;
+      if (rawTags.length > 0) {
+        md += `tags:\n`;
+        rawTags.forEach(t => { md += `  - "${t.replace(/"/g, '\\"')}"\n`; });
+      } else {
+        md += `tags: []\n`;
+      }
+      md += `---\n\n${body}\n`;
+
+      return { md, slug };
+    }
+
+    function updateMarkdown() {
+      const { md, slug } = generateMarkdown();
+      codeEl.textContent = md;
+      filenameEl.textContent = `src/content/plugins/${slug}.md`;
+    }
+
+    // Gắn listener cập nhật cho mọi input
+    form.addEventListener('input', updateMarkdown);
+    form.addEventListener('change', updateMarkdown);
+
+    // XỬ LÝ DROPZONE
+    const dropzone = document.getElementById('rbz-dropzone');
+    const fileInput = document.getElementById('rbz-file-input');
+    const fileInfo = document.getElementById('file-info');
+    const fileNameDisplay = document.getElementById('file-name-display');
+    const fileSizeDisplay = document.getElementById('file-size-display');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('drag-over');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files && fileInput.files[0]) {
+        handleFileSelect(fileInput.files[0]);
+      }
+    });
+
+    function handleFileSelect(file) {
+      fileInfo.hidden = false;
+      fileNameDisplay.textContent = file.name;
+      fileSizeDisplay.textContent = `(${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+
+      // Phân tích tên file: ví dụ TT_Bevel_v2.0.0.rbz hoặc my_plugin_1.2.rbz
+      let baseName = file.name.replace(/\.(rbz|zip)$/i, '');
+      let verMatch = baseName.match(/_?v?(\d+\.\d+(\.\d+)?)/i);
+      let version = verMatch ? verMatch[1] : '1.0.0';
+      let cleanTitle = baseName.replace(/_?v?\d+\.\d+(\.\d+)?/i, '').replace(/[_\-]+/g, ' ').trim();
+
+      if (!pTitle.value || pTitle.value === 'TT Plugin Starter') {
+        pTitle.value = cleanTitle.startsWith('TT') ? cleanTitle : `TT ${cleanTitle}`;
+      }
+      pVersion.value = version;
+
+      const slug = cleanTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      pSlug.value = slug.startsWith('tt-') ? slug : `tt-${slug}`;
+      pSlug.dataset.manual = "true";
+
+      if (!pDownload.value) {
+        pDownload.value = `/uploads/${file.name}`;
+      }
+
+      updateMarkdown();
+    }
+
+    // SAO CHÉP VÀ DOWNLOAD
+    copyBtn.addEventListener('click', async () => {
+      const { md } = generateMarkdown();
+      try {
+        await navigator.clipboard.writeText(md);
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="material-symbols-rounded">done</span> Đã sao chép!';
+        setTimeout(() => { copyBtn.innerHTML = originalText; }, 2000);
+      } catch (err) {
+        alert('Vui lòng chọn và sao chép thủ công từ khung mã bên dưới.');
+      }
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      const { md, slug } = generateMarkdown();
+      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${slug}.md`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // LOCAL API PUBLISH GATEWAY
+    localApiBtn.addEventListener('click', async () => {
+      const { md, slug } = generateMarkdown();
+      statusBanner.hidden = false;
+      statusBanner.className = 'status-banner loading';
+      statusBanner.textContent = 'Đang gửi dữ liệu đến Cổng Upload Server (localhost:4322)...';
+
+      try {
+        const res = await fetch('http://localhost:4322/api/publish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, markdown: md })
+        });
+        const result = await res.json();
+        if (result.success) {
+          statusBanner.className = 'status-banner success';
+          statusBanner.innerHTML = `<strong>Thành công!</strong> Đã xuất bản file: <code>${result.path}</code>. Hãy reload trang chủ để xem sản phẩm mới.`;
+        } else {
+          throw new Error(result.error || 'Server trả về lỗi');
+        }
+      } catch (err) {
+        statusBanner.className = 'status-banner error';
+        statusBanner.innerHTML = `<strong>Chưa kết nối Local Server:</strong> Chạy <code>npm run upload-server</code> để mở cổng ghi file trực tiếp. Hoặc bấm <strong>"Tải file .md"</strong> rồi lưu vào <code>src/content/plugins/${slug}.md</code>.`;
+      }
+    });
+
+    // Khởi tạo ban đầu
+    updateMarkdown();
+  </script>
+</BaseLayout>
+
+<style>
+  .portal-page {
+    background: #f8fafc;
+    min-height: 100vh;
+    padding-bottom: 90px;
+  }
+
+  .portal-hero {
+    background: radial-gradient(ellipse at 75% 50%, #16385b 0%, #0b1c35 42%, #08162b 100%);
+    color: white;
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .portal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #69c9ed;
+    background: rgba(105, 201, 237, 0.12);
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(105, 201, 237, 0.25);
+    margin-bottom: 18px;
+  }
+
+  .portal-hero h1 {
+    font: 800 36px "Manrope", sans-serif;
+    letter-spacing: -0.5px;
+    margin: 0 0 12px;
+  }
+
+  .portal-hero h1 em {
+    font-style: normal;
+    color: #4cc7ef;
+  }
+
+  .portal-lead {
+    font-size: 16px;
+    color: #cbd5e1;
+    max-width: 820px;
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+
+  .portal-lead code {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .portal-tabs-nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover, .tab-btn.active {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+  }
+
+  /* LAYOUT CHÍNH */
+  .portal-container {
+    margin-top: 40px;
+  }
+
+  .portal-layout {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  @media (max-width: 960px) {
+    .portal-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .portal-form-card, .portal-output-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #f0f9ff;
+    color: #0284c7;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+  }
+
+  .header-icon.blue {
+    background: #0b1830;
+    color: #38bdf8;
+  }
+
+  .card-header h2, .card-header h3 {
+    margin: 0;
+    font: 700 20px "Manrope", sans-serif;
+    color: #0f172a;
+  }
+
+  .card-header p {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  /* DROPZONE */
+  .dropzone {
+    border: 2px dashed #93c5fd;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 24px;
+  }
+
+  .dropzone:hover, .dropzone.drag-over {
+    border-color: #0284c7;
+    background: #f0f9ff;
+  }
+
+  .drop-icon {
+    font-size: 36px;
+    color: #0284c7;
+    margin-bottom: 6px;
+  }
+
+  .drop-title {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #1e293b;
+  }
+
+  .drop-browse {
+    color: #0284c7;
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  .drop-hint {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .file-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 6px 14px;
+    background: #dcfce7;
+    color: #15803d;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* FORM GRID */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+  }
+
+  .col-12 { grid-column: span 12; }
+  .col-8  { grid-column: span 8; }
+  .col-6  { grid-column: span 6; }
+  .col-4  { grid-column: span 4; }
+
+  @media (max-width: 680px) {
+    .col-8, .col-6, .col-4 { grid-column: span 12; }
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 6px;
+  }
+
+  .req { color: #e11d48; }
+
+  .form-group input[type="text"],
+  .form-group input[type="url"],
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    color: #0f172a;
+    transition: border-color 0.15s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+  }
+
+  .field-hint {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .input-duo {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 8px;
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .check-item {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .toggle-item {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .preview-box {
+    margin-top: 8px;
+    width: 100%;
+    height: 120px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f1f5f9;
+    display: grid;
+    place-items: center;
+  }
+
+  .preview-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+
+  /* OUTPUT CARD & PREVIEW */
+  .portal-output-card {
+    position: sticky;
+    top: 24px;
+  }
+
+  .output-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: #0284c7;
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: #0369a1;
+  }
+
+  .btn-outline {
+    background: #fff;
+    border-color: #cbd5e1;
+    color: #334155;
+  }
+  .btn-outline:hover {
+    border-color: #0284c7;
+    color: #0284c7;
+    background: #f0f9ff;
+  }
+
+  .btn-publish {
+    background: linear-gradient(135deg, #0f172a, #0b2341);
+    color: #38bdf8;
+    border-color: #1e3a5f;
+  }
+  .btn-publish:hover {
+    background: #0284c7;
+    color: #fff;
+    border-color: #0284c7;
+  }
+
+  .status-banner {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .status-banner.loading {
+    background: #fef9c3;
+    color: #854d0e;
+    border: 1px solid #fde047;
+  }
+
+  .status-banner.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+  }
+
+  .status-banner.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+  }
+
+  .code-preview-wrap {
+    background: #0b1830;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid #1e293b;
+  }
+
+  .code-header {
+    background: #071021;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: #94a3b8;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .code-badge {
+    background: #0369a1;
+    color: #bae6fd;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .code-preview-wrap pre {
+    margin: 0;
+    padding: 16px;
+    max-height: 380px;
+    overflow-y: auto;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #e2e8f0;
+  }
+
+  .destination-guide {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 12px;
+  }
+
+  .destination-guide h4 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .destination-guide ul {
+    margin: 0;
+    padding-left: 18px;
+    color: #475569;
+  }
+
+  .destination-guide li {
+    margin-bottom: 4px;
+  }
+
+  /* GUIDE SECTION */
+  .portal-guide-section {
+    margin-top: 50px;
+  }
+
+  .guide-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 36px;
+  }
+
+  .guide-card h2 {
+    font: 800 26px "Manrope", sans-serif;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 8px;
+  }
+
+  .guide-lead {
+    font-size: 15px;
+    color: #475569;
+    margin: 0 0 28px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 860px) {
+    .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  .guide-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 22px;
+    position: relative;
+  }
+
+  .guide-box.highlight {
+    background: #f0f9ff;
+    border-color: #bae6fd;
+  }
+
+  .box-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #0284c7;
+    background: #e0f2fe;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .guide-box h3 {
+    margin: 0 0 8px;
+    font: 700 18px "Manrope", sans-serif;
+    color: #0f172a;
+  }
+
+  .box-desc {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 12px;
+  }
+
+  .guide-box ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .guide-box li {
+    margin-bottom: 6px;
+  }
+</style>

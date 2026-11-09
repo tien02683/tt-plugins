@@ -1,0 +1,7 @@
+name = "tt-plugins-decap-oauth"
+main = "src/index.js"
+compatibility_date = "2026-11-09"
+
+[vars]
+# Exact CMS origin, no trailing slash. Update after first Pages deployment.
+ALLOWED_ORIGIN = "https://tt-plugins.pages.dev"

@@ -1,0 +1,22 @@
+{
+  "name": "tt-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "upload-server": "node scripts/upload-server.mjs",
+    "publish": "node scripts/agent-publish.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.7.0",
+    "decap-cms-app": "^3.8.3",
+    "typescript": "^5.7.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {}
+}

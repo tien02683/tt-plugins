@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TT Plugins — Thư Viện Plugin SketchUp Chuyên Nghiệp (UI/UX Pro Max Light)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================================= */
+    /* UI/UX PRO MAX DESIGN SYSTEM — LIGHT PALETTE               */
+    /* ========================================================= */
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-subtle: #f0f9ff;
+      --primary-border: #bae6fd;
+      --accent: #0ea5e9;
+      --sidebar-bg: #ffffff;
+      --sidebar-hover: #f8fafc;
+      --sidebar-active-bg: #f0f9ff;
+      --sidebar-active-text: #0284c7;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-body: #334155;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      --line: #e2e8f0;
+      --line-subtle: #f1f5f9;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 6px 16px -2px rgba(0, 0, 0, 0.03);
+      --shadow-hover: 0 14px 34px -4px rgba(2, 132, 199, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-modal: 0 20px 40px -6px rgba(15, 23, 42, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text-body);
+      display: flex;
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+
+    
+    /* ========================================================= */
+    /* GOOGLE MATERIAL SYMBOLS ROUNDED — UI/UX PRO MAX           */
+    /* ========================================================= */
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded', sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .material-symbols-rounded.filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .pro-nav-item .material-symbols-rounded {
+      font-size: 20px;
+      color: #64748b;
+      transition: all 0.15s ease;
+      margin-right: 2px;
+    }
+
+    .pro-nav-item:hover .material-symbols-rounded {
+      color: var(--primary);
+    }
+
+    .pro-nav-item.active .material-symbols-rounded {
+      color: var(--primary);
+      font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-pill .material-symbols-rounded {
+      font-size: 18px;
+    }
+
+    .filter-pill.active .material-symbols-rounded {
+      color: #ffffff !important;
+    }
+
+    /* ---------------- 1. LIGHT SIDEBAR (PRO MAX DRAWER) ---------------- */
+    .pro-sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 100;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+
+    .pro-brand {
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .pro-brand:hover { background: #fafbfc; }
+
+    .pro-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      font: 800 19px "Manrope", sans-serif;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      letter-spacing: -0.5px;
+    }
+
+    .pro-brand-info h2 {
+      margin: 0;
+      font: 800 16px "Manrope", sans-serif;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .pro-brand-info span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      margin-top: 2px;
+    }
+
+    .pro-nav-group {
+      padding: 18px 12px;
+      flex: 1;
+    }
+
+    .pro-nav-heading {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--text-subtle);
+      padding: 6px 12px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .pro-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      color: #475569;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 3px;
+      border: 1px solid transparent;
+    }
+
+    .pro-nav-item:hover {
+      background: var(--sidebar-hover);
+      color: var(--text-main);
+    }
+
+    .pro-nav-item.active {
+      background: var(--sidebar-active-bg);
+      color: var(--sidebar-active-text);
+      font-weight: 700;
+      border-color: var(--primary-border);
+      box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08);
+    }
+
+    .pro-nav-item .icon {
+      font-size: 16px;
+      width: 22px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pro-sidebar-foot {
+      padding: 16px 20px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--text-muted);
+      background: #fafbfc;
+    }
+    .pro-sidebar-foot strong { color: var(--text-main); }
+
+    /* ---------------- 2. MAIN CONTAINER ---------------- */
+    .pro-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--bg);
+    }
+
+    /* TOP BAR (LIGHT GLASS) */
+    .pro-topbar {
+      height: 70px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .pro-search-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 0 16px;
+      width: 460px;
+      height: 44px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+
+    .pro-search-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .pro-search-box input {
+      border: 0;
+      outline: 0;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .pro-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-action {
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.18s;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      border-color: var(--line);
+      color: var(--text-body);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: var(--text-main);
+    }
+
+    /* ---------------- 3. HERO BILLBOARD (LIGHT SAAS STYLE) ---------------- */
+    .pro-billboard {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius-lg);
+      padding: 36px 36px;
+      margin: 28px 36px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pro-billboard-content {
+      max-width: 620px;
+      z-index: 2;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1px solid #bae6fd;
+      color: #0369a1;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.8px;
+      box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08);
+    }
+
+    .pill-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #0284c7;
+    }
+
+    .pro-billboard h1 {
+      font: 800 34px/1.2 "Manrope", sans-serif;
+      color: var(--text-main);
+      margin: 14px 0 10px;
+      letter-spacing: -0.8px;
+    }
+
+    .pro-billboard h1 span {
+      color: var(--primary);
+    }
+
+    .pro-billboard p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin: 0 0 22px;
+    }
+
+    .pro-billboard-metrics {
+      display: flex;
+      gap: 32px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .pro-billboard-metrics b {
+      color: var(--text-main);
+      font-size: 18px;
+      margin-right: 4px;
+    }
+
+    .pro-billboard-visual {
+      width: 220px;
+      height: 180px;
+      background: #ffffff;
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 30px rgba(2, 132, 199, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .pro-billboard-visual .logo-text {
+      font: 800 48px "Manrope", sans-serif;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ---------------- 4. FILTER CONTROLS ---------------- */
+    .pro-controls {
+      padding: 24px 36px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      color: var(--text-body);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-pill:hover {
+      border-color: #cbd5e1;
+      color: var(--text-main);
+    }
+
+    .filter-pill.active {
+      background: var(--text-main);
+      border-color: var(--text-main);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+    }
+
+    .sort-badge {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-badge select {
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      font-size: 13px;
+      color: var(--text-main);
+      outline: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ---------------- 5. SUCJ GRID IN LIGHT THEME ---------------- */
+    .pro-grid-wrap {
+      padding: 12px 36px 60px;
+    }
+
+    .pro-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .plugin-card-light {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-card);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .plugin-card-light:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-border);
+    }
+
+    .plugin-card-cover {
+      height: 185px;
+      background: #f1f5f9;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+
+    .plugin-card-cover img, .plugin-card-cover svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .plugin-card-light:hover .plugin-card-cover img,
+    .plugin-card-light:hover .plugin-card-cover svg {
+      transform: scale(1.03);
+    }
+
+    .badge-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .badge-featured {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .badge-video-pill {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #0369a1;
+      backdrop-filter: blur(8px);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .plugin-card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .plugin-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .tag-category {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-price {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .tag-price.paid {
+      background: #fffbeb;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+
+    .plugin-card-title {
+      font: 800 18px/1.3 "Manrope", sans-serif;
+      color: var(--text-main);
+      margin: 0 0 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .plugin-card-desc {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 0 0 18px;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .plugin-card-foot {
+      border-top: 1px solid var(--line-subtle);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    .su-compat-badge {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .btn-card-cta {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+    .plugin-card-light:hover .btn-card-cta { gap: 8px; }
+
+    /* ---------------- 6. SINGLE PLUGIN DETAIL (LIGHT PRO MAX) ---------------- */
+    .pro-detail-container {
+      padding: 36px;
+      max-width: 1240px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .pro-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .pro-breadcrumbs a { color: var(--primary); cursor: pointer; }
+
+    .detail-hero-light {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 40px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 32px;
+    }
+
+    .detail-info h1 {
+      font: 800 36px "Manrope", sans-serif;
+      color: var(--text-main);
+      margin: 0 0 12px;
+      letter-spacing: -0.6px;
+    }
+
+    .detail-strip {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .detail-strip b { color: var(--text-main); }
+
+    .detail-summary-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-body);
+      margin-bottom: 24px;
+    }
+
+    .compat-pill-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .compat-pill {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      color: #0369a1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* DOWNLOAD BOX (RIGHT COLUMN OF DETAIL) */
+    .detail-download-box {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .price-headline {
+      font: 800 24px "Manrope", sans-serif;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .btn-download-rbz {
+      background: #16a34a;
+      color: white;
+      padding: 15px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+      margin: 16px 0 10px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-download-rbz:hover {
+      background: #15803d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.4);
+    }
+
+    /* SUCJ / PRO MAX SIGNATURE AI SUMMARY */
+    .pro-ai-takeaway {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 4px solid var(--primary);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: 28px 0;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #0369a1;
+    }
+
+    .pro-ai-takeaway strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* DETAIL CONTENT & SIDEBAR */
+    .detail-grid-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 36px;
+    }
+
+    .pro-prose {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--text-body);
+    }
+
+    .pro-prose h2 {
+      font: 800 24px "Manrope", sans-serif;
+      color: var(--text-main);
+      margin: 32px 0 14px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    .pro-prose ul { padding-left: 20px; }
+    .pro-prose li { padding: 4px 0; }
+
+    /* SPECS PANEL */
+    .light-specs-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .light-specs-card h3 {
+      font: 800 15px "Manrope", sans-serif;
+      margin: 0 0 16px;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .light-specs-dl dt {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 14px;
+    }
+
+    .light-specs-dl dd {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 4px 0 0;
+    }
+
+    /* ---------------- 7. CMS ADMIN WORKSPACE (LIGHT THEME) ---------------- */
+    .pro-cms-wrap {
+      padding: 36px;
+    }
+
+    .pro-cms-box {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .pro-cms-top {
+      padding: 16px 24px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cms-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .cms-table th {
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 2px solid var(--line);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cms-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--line-subtle);
+      color: var(--text-body);
+    }
+
+    .cms-table tr:hover td { background: #fafbfc; }
+
+    /* RESPONSIVE */
+    @media(max-width: 950px) {
+      body { flex-direction: column; }
+      .pro-sidebar { width: 100%; height: auto; position: static; }
+      .detail-hero-light { grid-template-columns: 1fr; }
+      .detail-grid-layout { grid-template-columns: 1fr; }
+      .pro-billboard { flex-direction: column; gap: 24px; }
+      .pro-topbar { padding: 0 20px; }
+      .pro-grid-wrap, .pro-detail-container, .pro-controls { padding-left: 20px; padding-right: 20px; }
+      .pro-search-box { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================== -->
+  <!-- 1. LIGHT SIDEBAR (UI/UX PRO MAX NAVIGATION)    -->
+  <!-- ============================================== -->
+  <aside class="pro-sidebar">
+    <div class="pro-brand" onclick="navigate('home')">
+      <div class="pro-logo">TT</div>
+      <div class="pro-brand-info">
+        <h2>TT PLUGINS</h2>
+        <span>SKETCHUP STORE · LIGHT</span>
+      </div>
+    </div>
+
+    <div class="pro-nav-group">
+      <div class="pro-nav-heading">THƯ VIỆN & CÔNG CỤ</div>
+      <div class="pro-nav-item active" id="nav-all" onclick="filterByNav('all', this)">
+        <span class="material-symbols-rounded">widgets</span> Tất cả Plugin
+      </div>
+      <div class="pro-nav-item" id="nav-workflow" onclick="filterByNav('Workflow', this)">
+        <span class="material-symbols-rounded">view_quilt</span> Quy trình & Viewport
+      </div>
+      <div class="pro-nav-item" id="nav-geometry" onclick="filterByNav('Geometry', this)">
+        <span class="material-symbols-rounded">deployed_code</span> Tối ưu Lưới & Mesh
+      </div>
+      <div class="pro-nav-item" id="nav-cad" onclick="filterByNav('CAD', this)">
+        <span class="material-symbols-rounded">architecture</span> CAD & Bản vẽ Kỹ thuật
+      </div>
+      <div class="pro-nav-item" id="nav-modeling" onclick="filterByNav('Modeling', this)">
+        <span class="material-symbols-rounded">handyman</span> Bo Cạnh & Dựng hình
+      </div>
+      <div class="pro-nav-item" id="nav-ai" onclick="filterByNav('AI', this)">
+        <span class="material-symbols-rounded">auto_awesome</span> AI & Dựng tường 3D
+      </div>
+
+      <div class="pro-nav-heading" style="margin-top: 20px;">HỆ THỐNG & QUẢN TRỊ</div>
+      <div class="pro-nav-item" onclick="openCmsTab()">
+        <span class="material-symbols-rounded">admin_panel_settings</span> Quản trị CMS (/admin)
+      </div>
+      <div class="pro-nav-item" onclick="openDeployTab()">
+        <span class="material-symbols-rounded">rocket_launch</span> Kế hoạch Triển khai
+      </div>
+    </div>
+
+    <div class="pro-sidebar-foot">
+      <strong>TT Plugins Studio</strong><br>
+      Thiết kế chuẩn UI/UX Pro Max · Nền sáng sang trọng cho SketchUp 2023 - 2027.
+    </div>
+  </aside>
+
+  <!-- ============================================== -->
+  <!-- 2. MAIN VIEW CONTAINER                         -->
+  <!-- ============================================== -->
+  <div class="pro-main">
+
+    <!-- TOP BAR (LIGHT GLASS) -->
+    <header class="pro-topbar">
+      <div class="pro-search-box">
+        <span class="material-symbols-rounded" style="color: #94a3b8; font-size: 20px;">search</span>
+        <input type="search" id="pro-search-input" placeholder="Tìm kiếm plugin (mesh, cad, bevel, view...)" oninput="handleSearch()" />
+      </div>
+
+      <div class="pro-top-actions">
+        <button class="btn-action btn-secondary" onclick="openCmsTab()"><span class="material-symbols-rounded">admin_panel_settings</span> Quản Trị Admin</button>
+        <button class="btn-action btn-primary" onclick="navigate('home')"><span class="material-symbols-rounded">storefront</span> Thư Viện Store <span class="material-symbols-rounded" style="font-size: 16px;">arrow_outward</span></button>
+      </div>
+    </header>
+
+    <!-- VIEW 1: HOME & STORE (UI/UX PRO MAX LIGHT) -->
+    <div id="page-home">
+      <!-- HERO BILLBOARD (AIRY LIGHT GRADIENT) -->
+      <section class="pro-billboard">
+        <div class="pro-billboard-content">
+          <div class="pill-badge">
+            <span class="dot"></span> SKETCHUP 2027 READY · C++ PROCEDURAL TOOLS
+          </div>
+          <h1>Khám phá bộ plugin <span>TT Plugins</span></h1>
+          <p>Tối ưu hóa quy trình dựng hình, giảm nhẹ dung lượng file, đồng bộ 4 góc nhìn viewport và tự động xuất bản vẽ CAD kỹ thuật chỉ với 1 cú click.</p>
+          <div class="pro-billboard-metrics">
+            <div><b id="stat-count">06</b> Tiện ích tuyển chọn</div>
+            <div><b>100%</b> Ruby 3.4 & C++</div>
+            <div><b>0đ</b> Phí Cloudflare Hosting</div>
+          </div>
+        </div>
+
+        <div class="pro-billboard-visual">
+          <div class="logo-text">TT</div>
+          <span style="font-size: 11px; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 700;">EXTENSION STORE</span>
+        </div>
+      </section>
+
+      <!-- FILTER CONTROLS -->
+      <div class="pro-controls">
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all" onclick="applyCategory('all', this)">
+            <span class="material-symbols-rounded">apps</span> Tất cả Plugins
+          </button>
+          <button class="filter-pill" data-filter="featured" onclick="applyFilterSpecial('featured', this)">
+            <span class="material-symbols-rounded filled" style="color: #f97316;">local_fire_department</span> Đề xuất (Featured)
+          </button>
+          <button class="filter-pill" data-filter="free" onclick="applyFilterSpecial('free', this)">
+            <span class="material-symbols-rounded" style="color: #10b981;">redeem</span> Miễn phí
+          </button>
+          <button class="filter-pill" data-filter="paid" onclick="applyFilterSpecial('paid', this)">
+            <span class="material-symbols-rounded" style="color: #0284c7;">workspace_premium</span> Bản Pro
+          </button>
+        </div>
+
+        <div class="sort-badge">
+          <span>Sắp xếp:</span>
+          <select id="sort-select" onchange="handleSort()">
+            <option value="newest">Mới cập nhật</option>
+            <option value="name">Tên A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- PLUGIN GRID (LIGHT CARDS) -->
+      <section class="pro-grid-wrap">
+        <div class="pro-grid" id="pro-grid-container">
+          <!-- Populated by JS -->
+        </div>
+        <div id="pro-empty-state" style="display: none; text-align: center; padding: 60px; background: white; border-radius: var(--radius-md); border: 1px dashed var(--line); color: var(--text-muted);">
+          Không tìm thấy plugin nào phù hợp với từ khóa này.
+        </div>
+      </section>
+    </div>
+
+    <!-- VIEW 2: SINGLE PLUGIN DETAIL (LIGHT PRO MAX) -->
+    <div id="page-detail" style="display: none;">
+      <div class="pro-detail-container">
+        <div class="pro-breadcrumbs">
+          <a onclick="navigate('home')">Trang chủ</a>
+          <span>›</span>
+          <a onclick="navigate('home')">Thư viện Plugin</a>
+          <span>›</span>
+          <b id="detail-crumb" style="color: var(--text-main);">TT Mesh Optimizer</b>
+        </div>
+
+        <!-- HERO DETAIL BOX -->
+        <div class="detail-hero-light">
+          <div class="detail-info">
+            <div style="font-size: 11px; font-weight: 800; color: var(--primary); letter-spacing: 1.5px; margin-bottom: 8px;" id="detail-category-label">GEOMETRY · TT PLUGINS</div>
+            <h1 id="detail-title">TT Mesh Optimizer</h1>
+
+            <div class="detail-strip">
+              <span>Tác giả: <b>TT Plugins Team</b></span>
+              <span>•</span>
+              <span>Phiên bản: <b id="detail-version">1.0.0</b></span>
+              <span>•</span>
+              <span>Cập nhật: <b id="detail-updated">09/11/2026</b></span>
+              <span>•</span>
+              <span>Đánh giá: ⭐⭐⭐⭐⭐ (5.0)</span>
+            </div>
+
+            <p class="detail-summary-text" id="detail-summary-text">
+              Tối ưu hóa lưới đa giác, giảm nhẹ dung lượng file mô hình 3D và tăng tốc khung hình viewport SketchUp lên tới 300%.
+            </p>
+
+            <div class="compat-pill-list" id="detail-compat-pills">
+              <!-- Compatibility pills -->
+            </div>
+          </div>
+
+          <!-- DOWNLOAD CARD -->
+          <div class="detail-download-box">
+            <div class="price-headline" id="detail-price-text">Bản Pro</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Định dạng cài đặt <code>.rbz</code> chuẩn Extension</div>
+
+            <a class="btn-download-rbz" id="detail-download-btn" href="#" target="_blank">
+              <span class="material-symbols-rounded">download</span> TẢI FILE CÀI ĐẶT (.RBZ)
+            </a>
+            <div id="detail-download-note" style="font-size: 11px; color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 5px 10px; text-align: center; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 6px;">
+              <span class="material-symbols-rounded" style="font-size: 14px; color: #16a34a;">verified</span>
+              <span>Link tải xanh tốc độ cao từ Dropbox (File chính thức)</span>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 12px; margin-top: 8px;">
+              <a href="#" id="detail-release-link" target="_blank" style="font-size: 12px; color: var(--primary); font-weight: 700;">Release notes ↗</a>
+              <span style="color: #cbd5e1;">|</span>
+              <a onclick="openCmsTab()" style="font-size: 12px; color: var(--text-muted); cursor: pointer;">Chỉnh sửa trong CMS</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIGNATURE AI QUICK TAKEAWAY BOX -->
+        <div class="pro-ai-takeaway">
+          <strong><span class="material-symbols-rounded" style="color: #0284c7; font-size: 20px; vertical-align: middle;">bolt</span> TÓM TẮT TÍNH NĂNG (AI QUICK TAKEAWAY)</strong>
+          <span id="detail-ai-takeaway">Công cụ giúp tối ưu đa giác thông minh, tự động loại bỏ cạnh đồng phẳng, làm nhẹ bản vẽ tức thì cho SketchUp 2023 - 2027.</span>
+        </div>
+
+        <!-- VIDEO EMBED SECTION IF AVAILABLE -->
+        <div id="detail-video-box" style="display: none; margin-bottom: 32px;">
+          <h3 style="font: 800 18px 'Manrope'; margin: 0 0 12px; color: var(--text-main);"><span class="material-symbols-rounded filled" style="color: #ef4444; font-size: 22px; vertical-align: middle;">smart_display</span> Video Demo & Hướng Dẫn Kỹ Thuật</h3>
+          <div style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius-md); overflow: hidden; background: #000; box-shadow: var(--shadow-card);">
+            <iframe id="detail-video-iframe" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- MAIN CONTENT + SIDEBAR -->
+        <div class="detail-grid-layout">
+          <article class="pro-prose" id="detail-article-content">
+            <!-- Article content -->
+          </article>
+
+          <aside>
+            <div class="light-specs-card">
+              <h3>Thông Số Kỹ Thuật</h3>
+              <dl class="light-specs-dl">
+                <dt>Tên file cài đặt</dt>
+                <dd id="spec-filename">TT_Extension.rbz</dd>
+                <dt>Động cơ thực thi</dt>
+                <dd>Ruby 3.4 / C++ Procedures</dd>
+                <dt>Khả năng tương thích</dt>
+                <dd id="spec-compat">SketchUp 2023 - 2027</dd>
+                <dt>Loại phân phối</dt>
+                <dd id="spec-license">Chính thức (Official)</dd>
+              </dl>
+            </div>
+
+            <div class="light-specs-card">
+              <h3>Thẻ Phân Loại</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="detail-tags-container">
+                <!-- Tags -->
+              </div>
+            </div>
+
+            <button class="btn-action btn-secondary" style="width: 100%; justify-content: center;" onclick="navigate('home')">
+              <span class="material-symbols-rounded" style="font-size: 18px; margin-right: 4px;">arrow_back</span> Quay Lại Thư Viện Plugin
+            </button>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: CMS ADMIN PANEL (LIGHT THEME) -->
+    <div id="page-cms" style="display: none;">
+      <div class="pro-cms-wrap">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <div style="font-size: 11px; font-weight: 800; color: var(--primary); letter-spacing: 1.5px;">BẢNG QUẢN TRỊ NỘI DUNG</div>
+            <h2 style="font: 800 32px 'Manrope'; color: var(--text-main); margin: 6px 0 0;">Quản Lý Plugins & Upload Tài Nguyên</h2>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-action btn-secondary" onclick="showCmsList()"><span class="material-symbols-rounded">format_list_bulleted</span> Danh Sách Plugins</button>
+            <button class="btn-action btn-primary" onclick="openNewPluginForm()"><span class="material-symbols-rounded">add_circle</span> Thêm Plugin Mới</button>
+          </div>
+        </div>
+
+        <div class="pro-cms-box">
+          <!-- CMS TABLE LIST -->
+          <div id="cms-panel-list" style="padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h3 style="font: 800 18px 'Manrope'; margin: 0; color: var(--text-main);">Danh sách (<span id="cms-count-span">6</span> plugins)</h3>
+              <input type="text" id="cms-search-box" placeholder="Lọc plugin..." oninput="renderCmsRows()" style="padding: 8px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 13px; width: 220px;" />
+            </div>
+
+            <table class="cms-table">
+              <thead>
+                <tr>
+                  <th>TÊN PLUGIN</th>
+                  <th>DANH MỤC</th>
+                  <th>VIDEO DEMO</th>
+                  <th>FILE RBZ</th>
+                  <th>GIÁ</th>
+                  <th style="text-align: right;">HÀNH ĐỘNG</th>
+                </tr>
+              </thead>
+              <tbody id="cms-table-rows">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- CMS FORM EDITOR -->
+          <div id="cms-panel-editor" style="display: none; padding: 32px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 16px;">
+              <h3 id="cms-form-title" style="font: 800 22px 'Manrope'; margin: 0; color: var(--text-main);">Chỉnh Sửa Plugin</h3>
+              <div style="display: flex; gap: 10px;">
+                <button class="btn-action btn-secondary" onclick="showCmsList()">Hủy</button>
+                <button class="btn-action btn-primary" onclick="saveCmsPlugin()"><span class="material-symbols-rounded">save</span> Lưu & Xuất Bản Ngay</button>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 32px;">
+              <div>
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Tên Plugin *</label>
+                  <input type="text" id="cms-input-title" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px;" />
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Slug URL *</label>
+                  <input type="text" id="cms-input-slug" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px;" />
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Mô tả tóm tắt</label>
+                  <textarea id="cms-input-summary" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; min-height: 75px;"></textarea>
+                </div>
+
+                <!-- VIDEO LINK -->
+                <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px; margin-bottom: 18px;">
+                  <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main);">
+                    <span style="color: #ef4444;">▶</span> Link Video Demo (YouTube)
+                  </label>
+                  <input type="text" id="cms-input-video" placeholder="https://www.youtube.com/watch?v=..." oninput="previewCmsVideo()" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; background: white;" />
+                  <div id="cms-video-prev-box" style="display: none; margin-top: 12px; position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius-sm); overflow: hidden;">
+                    <iframe id="cms-video-iframe" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+                  </div>
+                </div>
+
+                <!-- RBZ LINK -->
+                <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px; margin-bottom: 18px;">
+                  <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main);">
+                    <span style="color: var(--primary);">⬇</span> Link Tải File Plugin (.RBZ)
+                  </label>
+                  <input type="text" id="cms-input-download" placeholder="https://github.com/.../release.rbz" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; background: white;" />
+                  
+                  <div style="margin-top: 10px; font-size: 12px; color: var(--text-muted);">
+                    Hoặc chọn file .RBZ từ máy tính:
+                    <input type="file" accept=".rbz,.zip" onchange="handleCmsRbz(event)" style="display: block; margin-top: 6px;" />
+                    <span id="cms-rbz-status" style="color: #16a34a; font-weight: 700; display: none; margin-top: 4px;"></span>
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Bài viết chi tiết (Markdown)</label>
+                  <textarea id="cms-input-article" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; min-height: 160px; font-family: monospace;"></textarea>
+                </div>
+              </div>
+
+              <!-- RIGHT COL: IMAGES & METADATA -->
+              <div>
+                <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px; margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--text-main);">Ảnh Bìa Đại Diện</label>
+                  <div style="border: 2px dashed #cbd5e1; border-radius: var(--radius-sm); padding: 20px; text-align: center; cursor: pointer; background: white;" onclick="document.getElementById('cms-file-cover').click()">
+                    <input type="file" id="cms-file-cover" accept="image/*" style="display: none;" onchange="handleCmsCoverUpload(event)" />
+                    <div style="margin-bottom: 4px;"><span class="material-symbols-rounded" style="font-size: 40px; color: #0284c7;">add_photo_alternate</span></div>
+                    <strong style="color: var(--primary); font-size: 13px;">Tải ảnh từ máy tính</strong>
+                  </div>
+                  <div id="cms-cover-preview" style="height: 160px; border-radius: var(--radius-sm); overflow: hidden; background: #f1f5f9; margin-top: 10px; display: grid; place-items: center; border: 1px solid var(--line);">
+                    <span style="color: var(--text-muted); font-size: 12px;">Chưa chọn ảnh</span>
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Danh mục</label>
+                  <select id="cms-input-category" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; background: white;">
+                    <option value="Workflow">Workflow</option>
+                    <option value="Geometry">Geometry</option>
+                    <option value="CAD">CAD</option>
+                    <option value="Modeling">Modeling</option>
+                    <option value="AI">AI</option>
+                  </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
+                  <div>
+                    <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Loại giá</label>
+                    <select id="cms-input-price-type" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px; background: white;">
+                      <option value="free">Miễn phí</option>
+                      <option value="paid">Bản Pro</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Nhãn giá</label>
+                    <input type="text" id="cms-input-price-label" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px;" />
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Phiên bản</label>
+                  <input type="text" id="cms-input-version" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px;" />
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: var(--text-main);">Tags (cách nhau dấu phẩy)</label>
+                  <input type="text" id="cms-input-tags" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 14px;" />
+                </div>
+
+                <label style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--text-main);">
+                  <input type="checkbox" id="cms-input-featured" /> Đặt làm Plugin Đề Xuất (Featured)
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPT FOR LIGHT UI LOGIC -->
+  <script>
+    const DEFAULT_PLUGINS = [
+      {
+        slug: "tt-bevel-studio",
+        title: "TT Bevel 2.0 (Vát Cạnh & Phào Chỉ Kiến Trúc)",
+        category: "Modeling",
+        summary: "Giải pháp vát cạnh và tạo phào chỉ kiến trúc thế hệ mới cho SketchUp. Tích hợp 9 biên dạng mặt cắt, bảng điều khiển HUD nổi trực quan, khung dây cảnh báo thông minh và quy trình Live Bevel phi phá hủy.",
+        version: "2.0.0",
+        compatibility: ["SketchUp 2021", "SketchUp 2022", "SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro · Dùng thử 15 ngày",
+        featured: true,
+        updated_at: "09/11/2026",
+        tags: ["Bevel 2.0", "9 Mặt Cắt", "BEVEL HUD", "Khung Dây Cảnh Báo", "Live Bevel", "Ruby 3.4 & C++"],
+        video_url: "https://youtu.be/eDy_cCu2nss",
+        download_url: "https://www.dropbox.com/scl/fi/825itwmsbgkslaqt8dbor/TT_Bevel_v2.0.0.rbz?rlkey=2psjhft9ujw8c7sl7llz8984s&st=qo2lenfn&dl=1",
+        release_url: "https://github.com/storytold/tt-plugins/releases",
+        coverImage: "images/tt-bevel/slide_01_intro.png",
+        articleHtml: `
+          <h2>Tổng Quan Về TT Bevel 2.0</h2>
+          <p>
+            Trong thiết kế kiến trúc và mô hình hóa nội thất thực tế, không có đồ vật nào sở hữu góc cạnh sắc nhọn tuyệt đối 90 độ. 
+            <strong>TT Bevel 2.0 (TT Bevel Studio)</strong> là giải pháp vát mép, bo tròn và tạo phào chỉ kiến trúc thế hệ mới, 
+            được thiết kế chuyên sâu cho người dùng SketchUp chuyên nghiệp từ phiên bản <strong>2021 đến 2027</strong> 
+            với nền tảng Ruby 3.4 và nhân tính toán hình học C++ siêu tốc.
+          </p>
+
+          <!-- IMAGE GALLERY SHOWCASE -->
+          <div style="margin: 28px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-bevel/slide_01_intro.png" onerror="this.src='public/images/tt-bevel/slide_01_intro.png';" style="width: 100%; height: auto; display: block;" alt="TT Bevel 2.0 Intro" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                1. Giao diện thế hệ mới chuẩn UI/UX Pro Max
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-bevel/slide_02_profiles.png" onerror="this.src='public/images/tt-bevel/slide_02_profiles.png';" style="width: 100%; height: auto; display: block;" alt="9 Biên dạng mặt cắt" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                2. 9 Biên dạng mặt cắt: Round, Chamfer, Cove, Ogee, Reveal...
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-bevel/slide_03_hud_studio.png" onerror="this.src='public/images/tt-bevel/slide_03_hud_studio.png';" style="width: 100%; height: auto; display: block;" alt="BEVEL HUD Studio" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                3. Bảng điều khiển BEVEL HUD nổi trực tiếp trên viewport
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-bevel/slide_04_smart_preview.png" onerror="this.src='public/images/tt-bevel/slide_04_smart_preview.png';" style="width: 100%; height: auto; display: block;" alt="Khung dây thông minh" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                4. Khung dây xem trước thông minh cảnh báo vượt ngưỡng
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-bevel/slide_05_live_stack.png" onerror="this.src='public/images/tt-bevel/slide_05_live_stack.png';" style="width: 100%; height: auto; display: block;" alt="Live Bevel Stack" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                5. Quy trình phi phá hủy Modifier Stack & Tự làm mềm cạnh
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-bevel/slide_06_outro.png" onerror="this.src='public/images/tt-bevel/slide_06_outro.png';" style="width: 100%; height: auto; display: block;" alt="Dùng thử 15 ngày" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                6. Đa ngôn ngữ Tiếng Việt & Anh · Dùng thử 15 ngày
+              </div>
+            </div>
+          </div>
+
+          <h2>6 Đột Phá Công Nghệ Trên TT Bevel 2.0</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin: 20px 0;">
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">1. 9 Biên dạng mặt cắt chuyên nghiệp</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Tích hợp đầy đủ: Bo tròn (Round), Vát phẳng (Chamfer), Lòng máng (Cove), Phào cổ điển (Ogee), Bậc giật cấp (Step), Rãnh âm kiến trúc (Reveal), Reverse Ogee, Triple Chamfer và Soft Bevel. Thuật toán phân nan quạt đa mặt xử lý triệt để góc giao 3 mặt phẳng, không để lại rác hay rách bề mặt.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">2. Bảng điều khiển BEVEL HUD nổi trực tiếp trên Viewport</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Thanh công cụ HUD nổi ngay trên màn hình làm việc của SketchUp, hỗ trợ đổi theme Sáng/Tối, cho phép nhập số tự do và tùy chỉnh độc lập chiều rộng (Width) cùng chiều sâu rãnh âm (Depth).</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">3. Khung dây xem trước thông minh (Smart Wireframe Preview)</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Hiển thị màu cam khi mặt cắt an toàn, tự động chuyển sang màu đỏ cảnh báo tức thì ngay khi thông số vát vượt quá giới hạn hình học của khối hình ban đầu.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">4. Quy trình phi phá hủy (Non-destructive Live Bevel)</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Giữ nguyên khối hình gốc, quản lý qua lớp Modifier Stack. Người dùng có thể tinh chỉnh lại bán kính bo hoặc đổi profile bất kỳ lúc nào mà không phải bấm Ctrl+Z (Undo).</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">5. Tự động làm mềm cạnh & Gom sạch đường nét đồng phẳng</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Hệ thống tự động Soft/Smooth cạnh tiếp tuyến và dọn dẹp các đường sinh coplanar thừa, giúp model bóng bẩy, sẵn sàng cho việc kết xuất hình ảnh trên Enscape, V-Ray, D5 Render.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">6. Đa ngôn ngữ & Dùng thử 15 ngày miễn phí</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Hỗ trợ chuyển đổi nhanh Tiếng Việt và Tiếng Anh tức thì. Người dùng được trải nghiệm trọn vẹn mọi tính năng cao cấp trong 15 ngày dùng thử miễn phí.</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>Quy Trình Cài Đặt File .RBZ Trên SketchUp</h2>
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-top: 16px;">
+            <ol style="margin: 0; padding-left: 22px; color: #166534; font-size: 14.5px; line-height: 1.8;">
+              <li><strong>Bước 1:</strong> Bấm nút màu xanh <em>"TẢI FILE CÀI ĐẶT (.RBZ)"</em> ở phía trên để tải file trực tiếp <code>TT_Bevel_v2.0.0.rbz</code> từ Dropbox.</li>
+              <li><strong>Bước 2:</strong> Mở SketchUp (phiên bản 2021 đến 2027), vào menu <strong>Extensions &gt; Extension Manager</strong> (Trình Quản Lý Tiện Ích Mở Rộng).</li>
+              <li><strong>Bước 3:</strong> Click vào nút <strong>Install Extension</strong> ở góc dưới bên trái, trỏ đến file <code>TT_Bevel_v2.0.0.rbz</code> vừa tải về. Bộ thanh công cụ TT Bevel 2.0 sẽ lập tức xuất hiện sẵn sàng sử dụng!</li>
+            </ol>
+          </div>
+`
+      },
+      {
+        slug: "tt-multi-view",
+        title: "TT Multi View (Đồng Bộ 4 Cửa Sổ)",
+        category: "Workflow",
+        summary: "Đồng bộ 4 góc nhìn viewport cùng lúc (Mặt đứng, Mặt bằng, Phối cảnh) để làm việc và kiểm tra mô hình 3D trực quan.",
+        version: "0.1.0",
+        compatibility: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "free",
+        price_label: "Bản thử nghiệm",
+        featured: true,
+        updated_at: "09/11/2026",
+        tags: ["Multi View", "Workflow", "Viewport", "Đồng bộ"],
+        video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        download_url: "https://github.com/storytold/tt-plugins/releases/download/v0.1.0/TT_MultiView.rbz",
+        release_url: "https://github.com/storytold/tt-plugins/releases",
+        coverImage: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="bg1" x2="1" y2="1"><stop stop-color="#f0f9ff"/><stop offset="1" stop-color="#e0f2fe"/></linearGradient></defs><rect width="900" height="520" fill="url(#bg1)"/><g fill="#ffffff" stroke="#0284c7" stroke-width="2"><rect x="105" y="95" width="300" height="165" rx="10"/><rect x="495" y="95" width="300" height="165" rx="10"/><rect x="105" y="290" width="300" height="135" rx="10"/><rect x="495" y="290" width="300" height="135" rx="10"/></g><g stroke="#0369a1" stroke-width="3" fill="none"><path d="M180 205l70-65 70 65M250 140v105M570 205l70-65 70 65M640 140v105"/></g><text x="450" y="475" text-anchor="middle" fill="#0284c7" font-family="'Manrope', sans-serif" font-size="20" font-weight="800" letter-spacing="6">TT MULTI VIEW</text></svg>`,
+        articleHtml: `
+          <h2>Giới thiệu TT Multi View</h2>
+          <p>TT Multi View giải quyết nhược điểm cố hữu của SketchUp là chỉ làm việc trên một khung nhìn viewport đơn lẻ. Plugin cho phép người dùng chia tách màn hình làm việc thành nhiều khung nhìn độc lập (Mặt bằng, Mặt đứng, Phối cảnh 3D) và đồng bộ con trỏ chuột, góc nhìn và đối tượng được chọn theo thời gian thực.</p>
+        `
+      },
+      {
+        slug: "tt-mesh-optimizer",
+        title: "TT Mesh Optimizer (Tối Ưu Lưới 3D)",
+        category: "Geometry",
+        summary: "Tối ưu hóa lưới đa giác, decimate polygon, dọn dẹp cạnh thừa coplanar và tăng tốc độ mượt mà cho các file 3D nặng.",
+        version: "1.0.0",
+        compatibility: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro",
+        featured: true,
+        updated_at: "09/11/2026",
+        tags: ["Mesh", "Optimize", "Polygon Decimation", "Lưới nhẹ"],
+        video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        download_url: "",
+        release_url: "",
+        coverImage: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="bg2" x2="1" y2="1"><stop stop-color="#eff6ff"/><stop offset="1" stop-color="#dbeafe"/></linearGradient></defs><rect width="900" height="520" fill="url(#bg2)"/><g stroke="#2563eb" stroke-width="2" fill="none"><polygon points="450,110 630,215 630,425 450,530 270,425 270,215" stroke-dasharray="6,4"/><polygon points="450,160 580,240 580,390 450,470 320,390 320,240"/><circle cx="450" cy="315" r="8" fill="#0284c7"/><line x1="450" y1="315" x2="450" y2="160"/><line x1="450" y1="315" x2="580" y2="240"/><line x1="450" y1="315" x2="580" y2="390"/><line x1="450" y1="315" x2="450" y2="470"/><line x1="450" y1="315" x2="320" y2="390"/><line x1="450" y1="315" x2="320" y2="240"/></g><text x="450" y="475" text-anchor="middle" fill="#1e40af" font-family="'Manrope', sans-serif" font-size="20" font-weight="800" letter-spacing="6">TT MESH OPTIMIZER</text></svg>`,
+        articleHtml: `
+          <h2>Giới thiệu TT Mesh Optimizer</h2>
+          <p>Mô hình SketchUp tải từ 3D Warehouse hoặc thư viện ngoại thất thường chứa số lượng đa giác thừa khổng lồ, khiến viewport bị lag giật. TT Mesh Optimizer ứng dụng thuật toán gom cụm đỉnh thông minh để giảm 50% đến 80% polygon mà vẫn giữ nguyên hình thái vật thể.</p>
+        `
+      },
+      {
+        slug: "tt-su-to-cad",
+        title: "TT SU to CAD (Xuất Bản Vẽ Kỹ Thuật)",
+        category: "CAD",
+        summary: "Tự động trích xuất mặt bằng, mặt cắt và mặt đứng từ SketchUp sang định dạng CAD DXF/DWG chuẩn tỷ lệ kỹ thuật.",
+        version: "1.0.0",
+        compatibility: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro",
+        featured: false,
+        updated_at: "09/11/2026",
+        tags: ["CAD", "DXF Export", "Mặt cắt kỹ thuật", "Bản vẽ 2D"],
+        video_url: "",
+        download_url: "",
+        release_url: "",
+        coverImage: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="bg3" x2="1" y2="1"><stop stop-color="#fefce8"/><stop offset="1" stop-color="#fef08a"/></linearGradient></defs><rect width="900" height="520" fill="url(#bg3)"/><g stroke="#ca8a04" stroke-width="2" fill="none"><rect x="180" y="110" width="540" height="300" stroke-width="3"/><line x1="180" y1="260" x2="720" y2="260"/><line x1="450" y1="110" x2="450" y2="410"/><circle cx="315" cy="185" r="45"/><rect x="525" y="150" width="130" height="70"/></g><text x="450" y="475" text-anchor="middle" fill="#a16207" font-family="'Manrope', sans-serif" font-size="20" font-weight="800" letter-spacing="6">TT SU TO CAD</text></svg>`,
+        articleHtml: `
+          <h2>Giới thiệu TT SU to CAD</h2>
+          <p>Xuất mặt cắt từ SketchUp sang AutoCAD thường bị vụn nét, mất layer và không đúng tỷ lệ. TT SU to CAD tối ưu hóa đường cắt Section Plane thành các polyline khép kín, phân tách layer theo vật liệu và xuất trực tiếp file DXF chuẩn tỷ lệ 1:1.</p>
+        `
+      },
+      {
+        slug: "tt-2d-to-3d",
+        title: "TT 2D to 3D Plan (Dựng Tường Tự Động)",
+        category: "AI",
+        summary: "Nhận diện nét vẽ CAD mặt bằng 2D và tự động sinh khối tường 3D, đục cửa sổ, cửa đi chỉ trong vài giây.",
+        version: "4.0.0",
+        compatibility: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro",
+        featured: false,
+        updated_at: "09/11/2026",
+        tags: ["AI Dựng hình", "Mặt bằng 2D sang 3D", "Sinh tường tự động", "BIM"],
+        video_url: "",
+        download_url: "",
+        release_url: "",
+        coverImage: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="bg4" x2="1" y2="1"><stop stop-color="#fdf4ff"/><stop offset="1" stop-color="#fae8ff"/></linearGradient></defs><rect width="900" height="520" fill="url(#bg4)"/><g fill="none" stroke="#9333ea" stroke-width="2.5"><polygon points="450,110 680,210 680,350 450,450 220,350 220,210"/><line x1="450" y1="210" x2="450" y2="450"/><line x1="450" y1="210" x2="680" y2="210"/><line x1="450" y1="210" x2="220" y2="210"/></g><text x="450" y="475" text-anchor="middle" fill="#7e22ce" font-family="'Manrope', sans-serif" font-size="20" font-weight="800" letter-spacing="6">TT 2D TO 3D PLAN</text></svg>`,
+        articleHtml: `
+          <h2>Giới thiệu TT 2D to 3D Plan v4</h2>
+          <p>Dựng lại tường và khoét lỗ cửa từ file mặt bằng 2D là công việc lặp đi lặp lại nhàm chán nhất. TT 2D to 3D Plan v4 ứng dụng thuật toán nhận diện đường bao khép kín để nâng khối tường 3D theo chiều cao chỉ định, tự động đục ô cửa đi, cửa sổ và gán linh kiện cửa vào đúng vị trí.</p>
+        `
+      },
+      {
+        slug: "tt-procedural-studio",
+        title: "TT Procedural Studio (Cấu Kiện Tham Số)",
+        category: "Workflow",
+        summary: "Dựng cấu kiện kiến trúc tham số dọc theo đường dẫn: Tường nhiều lớp, lan can, hàng rào, khung thép kết cấu.",
+        version: "1.0.0",
+        compatibility: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro",
+        featured: false,
+        updated_at: "09/11/2026",
+        tags: ["Procedural", "Profile Extrusion", "Lan can tham số", "Khung thép", "SU 2027 C++"],
+        video_url: "",
+        download_url: "",
+        release_url: "",
+        coverImage: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><defs><linearGradient id="bg6" x2="1" y2="1"><stop stop-color="#f0fdfa"/><stop offset="1" stop-color="#ccfbf1"/></linearGradient></defs><rect width="900" height="520" fill="url(#bg6)"/><g stroke="#0d9488" stroke-width="2" fill="none"><path d="M150 360 Q450 140 750 360" stroke="#0f766e" stroke-width="4"/><rect x="250" y="240" width="30" height="90" fill="#ffffff" stroke="#0d9488"/><rect x="435" y="160" width="30" height="90" fill="#ffffff" stroke="#0d9488"/><rect x="620" y="240" width="30" height="90" fill="#ffffff" stroke="#0d9488"/></g><text x="450" y="475" text-anchor="middle" fill="#0f766e" font-family="'Manrope', sans-serif" font-size="20" font-weight="800" letter-spacing="6">TT PROCEDURAL STUDIO</text></svg>`,
+        articleHtml: `
+          <h2>Giới thiệu TT Procedural Studio</h2>
+          <p>TT Procedural Studio khai thác sức mạnh của các thủ tục hình học C++ gốc trên SketchUp 2027 để dựng các cấu kiện kiến trúc đa lớp dọc theo đường dẫn.</p>
+        `
+      }
+    ];
+
+    // Always use updated DEFAULT_PLUGINS to prevent stale/corrupt localStorage
+    let PLUGINS = DEFAULT_PLUGINS;
+    try { localStorage.removeItem('TT_PLUGINS_DATA_V2'); } catch(e) {}
+
+    try {
+      const saved = localStorage.getItem('TT_PLUGINS_DATA_V2');
+      PLUGINS = saved ? JSON.parse(saved) : DEFAULT_PLUGINS;
+    } catch(e) {
+      PLUGINS = DEFAULT_PLUGINS;
+    }
+
+    let activeFilter = 'all';
+    let activeSpecialFilter = null;
+
+    function getYouTubeEmbed(url) {
+      if (!url) return null;
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? `https://www.youtube-nocookie.com/embed/${match[2]}` : null;
+    }
+
+    // RENDER SUCJ PRO MAX GRID
+    function renderProGrid() {
+      const container = document.getElementById('pro-grid-container');
+      const searchVal = (document.getElementById('pro-search-input')?.value || '').trim().toLowerCase();
+      
+      let html = '';
+      let count = 0;
+
+      PLUGINS.forEach(p => {
+        let matches = true;
+
+        if (activeFilter !== 'all' && p.category !== activeFilter) matches = false;
+        if (activeSpecialFilter === 'featured' && !p.featured) matches = false;
+        if (activeSpecialFilter === 'free' && p.price_type !== 'free') matches = false;
+        if (activeSpecialFilter === 'paid' && p.price_type !== 'paid') matches = false;
+
+        const corpus = `${p.title} ${p.category} ${p.summary} ${(p.tags || []).join(' ')}`.toLowerCase();
+        if (searchVal && !corpus.includes(searchVal)) matches = false;
+
+        if (matches) {
+          count++;
+          const coverHtml = (p.coverImage && p.coverImage.startsWith('<svg'))
+            ? p.coverImage
+            : `<img src="${p.coverImage || '/images/plugin-placeholder.svg'}" alt="${p.title}" />`;
+
+          html += `
+            <article class="plugin-card-light" onclick="openPluginDetail('${p.slug}')">
+              <div class="plugin-card-cover">
+                ${coverHtml}
+                ${p.featured ? '<span class="badge-tag badge-featured"><span class="material-symbols-rounded filled" style="font-size: 12px; margin-right: 2px;">local_fire_department</span> ĐỀ XUẤT</span>' : ''}
+                ${p.video_url ? '<span class="badge-video-pill"><span class="material-symbols-rounded filled" style="font-size: 13px; margin-right: 3px;">smart_display</span> VIDEO</span>' : ''}
+              </div>
+              <div class="plugin-card-body">
+                <div class="plugin-meta-row">
+                  <span class="tag-category">${p.category}</span>
+                  <span class="tag-price ${p.price_type === 'paid' ? 'paid' : ''}">${p.price_label}</span>
+                </div>
+                <h3 class="plugin-card-title">${p.title}</h3>
+                <p class="plugin-card-desc">${p.summary}</p>
+                <div class="plugin-card-foot">
+                  <span class="su-compat-badge">${(p.compatibility || ["SU 2023+"])[0]}</span>
+                  <span class="btn-card-cta">Chi tiết & Tải về <span class="material-symbols-rounded" style="font-size: 15px; margin-left: 2px;">arrow_forward</span></span>
+                </div>
+              </div>
+            </article>
+          `;
+        }
+      });
+
+      container.innerHTML = html;
+      document.getElementById('pro-empty-state').style.display = count === 0 ? 'block' : 'none';
+      document.getElementById('stat-count').innerText = PLUGINS.length.toString().padStart(2, '0');
+    }
+
+    function handleSearch() {
+      renderProGrid();
+    }
+
+    function filterByNav(cat, el) {
+      activeFilter = cat;
+      activeSpecialFilter = null;
+      document.querySelectorAll('.pro-nav-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.filter-pill[data-filter="all"]`)?.classList.add('active');
+      navigate('home');
+      renderProGrid();
+    }
+
+    function applyCategory(cat, el) {
+      activeFilter = cat;
+      activeSpecialFilter = null;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      renderProGrid();
+    }
+
+    function applyFilterSpecial(type, el) {
+      activeSpecialFilter = type;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      renderProGrid();
+    }
+
+    function handleSort() {
+      const mode = document.getElementById('sort-select').value;
+      if (mode === 'name') {
+        PLUGINS.sort((a,b) => a.title.localeCompare(b.title));
+      } else {
+        PLUGINS.sort((a,b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      }
+      renderProGrid();
+    }
+
+    function navigate(view) {
+      document.getElementById('page-home').style.display = view === 'home' ? 'block' : 'none';
+      document.getElementById('page-detail').style.display = view === 'detail' ? 'block' : 'none';
+      document.getElementById('page-cms').style.display = view === 'cms' ? 'block' : 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openPluginDetail(slug) {
+      const p = PLUGINS.find(item => item.slug === slug) || PLUGINS[0];
+
+      document.getElementById('detail-crumb').innerText = p.title;
+      document.getElementById('detail-category-label').innerText = `${p.category.toUpperCase()} · TT PLUGINS`;
+      document.getElementById('detail-title').innerText = p.title;
+      document.getElementById('detail-version').innerText = p.version;
+      document.getElementById('detail-updated').innerText = p.updated_at;
+      document.getElementById('detail-summary-text').innerText = p.summary;
+      document.getElementById('detail-price-text').innerText = p.price_label;
+      document.getElementById('detail-ai-takeaway').innerText = p.summary;
+
+      // Compatibility pills
+      const compatBox = document.getElementById('detail-compat-pills');
+      compatBox.innerHTML = (p.compatibility || ["SketchUp 2023+"]).map(c => `
+        <span class="compat-pill">${c}</span>
+      `).join('');
+
+      // Download Button
+      const dlBtn = document.getElementById('detail-download-btn');
+      const dlNote = document.getElementById('detail-download-note');
+      if (p.download_url) {
+        dlBtn.href = p.download_url;
+        dlBtn.setAttribute('target', '_blank');
+        dlBtn.innerHTML = `<span class="material-symbols-rounded">download</span> TẢI FILE CÀI ĐẶT (${p.slug === 'tt-bevel-studio' ? 'TT_Bevel_v2.0.0.rbz' : p.slug + '.rbz'})`;
+        dlBtn.onclick = null;
+        if (dlNote) dlNote.style.display = 'flex';
+      } else {
+        dlBtn.href = "#";
+        dlBtn.innerHTML = `<span class="material-symbols-rounded">download</span> TẢI VỀ CÀI ĐẶT (.RBZ)`;
+        dlBtn.onclick = function(e) {
+          e.preventDefault();
+          alert('Chưa có link tải .RBZ cho plugin này. Bạn hãy vào Quản trị CMS để gắn link tải!');
+        };
+        if (dlNote) dlNote.style.display = 'none';
+      }
+
+      // Update URL hash
+      if (window.location.hash !== '#' + p.slug) {
+        history.replaceState(null, null, '#' + p.slug);
+      }
+
+      // Video Embed
+      const videoWrapper = document.getElementById('detail-video-box');
+      const videoIframe = document.getElementById('detail-video-iframe');
+      const embed = getYouTubeEmbed(p.video_url);
+      if (embed) {
+        videoIframe.src = embed;
+        videoWrapper.style.display = 'block';
+      } else {
+        videoIframe.src = '';
+        videoWrapper.style.display = 'none';
+      }
+
+      // Article Body
+      document.getElementById('detail-article-content').innerHTML = p.articleHtml;
+
+      // Specs
+      document.getElementById('spec-filename').innerText = p.slug === 'tt-bevel-studio' ? 'TT_Bevel_v2.0.0.rbz (799 KB)' : `${p.slug}.rbz`;
+      document.getElementById('spec-compat').innerText = (p.compatibility || []).join(', ');
+      document.getElementById('spec-license').innerText = p.price_type === 'paid' ? 'Bản quyền Pro' : 'Bản Miễn phí';
+
+      // Tags cloud
+      document.getElementById('detail-tags-container').innerHTML = (p.tags || []).map(t => `
+        <span style="background:#f1f5f9; padding:4px 9px; border-radius:4px; font-size:11px; color:#475569; border:1px solid #e2e8f0;">${t}</span>
+      `).join('');
+
+      navigate('detail');
+    }
+
+    // CMS ADMIN FUNCTIONS
+    let cmsEditingSlug = null;
+    let cmsCoverDataUrl = null;
+
+    function openCmsTab() {
+      navigate('cms');
+      showCmsList();
+    }
+
+    function showCmsList() {
+      document.getElementById('cms-panel-list').style.display = 'block';
+      document.getElementById('cms-panel-editor').style.display = 'none';
+      renderCmsRows();
+    }
+
+    function renderCmsRows() {
+      const tbody = document.getElementById('cms-table-rows');
+      const q = (document.getElementById('cms-search-box')?.value || '').trim().toLowerCase();
+      let html = '';
+
+      PLUGINS.forEach(p => {
+        if (!q || p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)) {
+          html += `
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">
+                ${p.title}
+                <small style="display:block; color:var(--text-muted); font-weight:400; font-size:11px;">/${p.slug}/</small>
+              </td>
+              <td style="color: var(--text-muted);">${p.category}</td>
+              <td>
+                ${p.video_url ? '<span style="color:#0284c7; font-weight:700; display:inline-flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:16px;">check_circle</span> Có Video</span>' : '<span style="color:#cbd5e1;">—</span>'}
+              </td>
+              <td>
+                ${p.download_url ? '<span style="color:#16a34a; font-weight:700; display:inline-flex; align-items:center; gap:4px;"><span class="material-symbols-rounded" style="font-size:16px;">check_circle</span> Có file RBZ</span>' : '<span style="color:#ef4444;">Chưa gắn link</span>'}
+              </td>
+              <td>
+                <span class="tag-price ${p.price_type === 'paid' ? 'paid' : ''}">${p.price_label}</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="btn-action btn-secondary" style="padding: 5px 12px; font-size: 12px; margin-right: 6px;" onclick="openCmsEdit('${p.slug}')"><span class="material-symbols-rounded" style="font-size: 14px; vertical-align: middle; margin-right: 2px;">edit</span> Sửa / Upload</button>
+                <button class="btn-action btn-primary" style="padding: 5px 12px; font-size: 12px;" onclick="openPluginDetail('${p.slug}')">Xem <span class="material-symbols-rounded" style="font-size: 14px; vertical-align: middle;">arrow_outward</span></button>
+              </td>
+            </tr>
+          `;
+        }
+      });
+      tbody.innerHTML = html;
+      document.getElementById('cms-count-span').innerText = PLUGINS.length;
+    }
+
+    function openNewPluginForm() {
+      cmsEditingSlug = null;
+      cmsCoverDataUrl = null;
+      document.getElementById('cms-form-title').innerText = 'Thêm Plugin Mới';
+      document.getElementById('cms-panel-list').style.display = 'none';
+      document.getElementById('cms-panel-editor').style.display = 'block';
+
+      document.getElementById('cms-input-title').value = '';
+      document.getElementById('cms-input-slug').value = '';
+      document.getElementById('cms-input-summary').value = '';
+      document.getElementById('cms-input-video').value = '';
+      document.getElementById('cms-input-download').value = '';
+      document.getElementById('cms-input-article').value = '<h2>Giới thiệu</h2>\n<p>Mô tả chi tiết...</p>';
+      document.getElementById('cms-input-category').value = 'Workflow';
+      document.getElementById('cms-input-price-type').value = 'free';
+      document.getElementById('cms-input-price-label').value = 'Miễn phí';
+      document.getElementById('cms-input-version').value = '1.0.0';
+      document.getElementById('cms-input-tags').value = '';
+      document.getElementById('cms-input-featured').checked = false;
+      document.getElementById('cms-cover-preview').innerHTML = '<span style="color:var(--text-muted); font-size:12px;">Chưa chọn ảnh</span>';
+      document.getElementById('cms-video-prev-box').style.display = 'none';
+      document.getElementById('cms-rbz-status').style.display = 'none';
+    }
+
+    function openCmsEdit(slug) {
+      const p = PLUGINS.find(item => item.slug === slug);
+      if (!p) return;
+      cmsEditingSlug = slug;
+      cmsCoverDataUrl = p.coverImage;
+
+      document.getElementById('cms-form-title').innerText = `Chỉnh Sửa Plugin: ${p.title}`;
+      document.getElementById('cms-panel-list').style.display = 'none';
+      document.getElementById('cms-panel-editor').style.display = 'block';
+
+      document.getElementById('cms-input-title').value = p.title;
+      document.getElementById('cms-input-slug').value = p.slug;
+      document.getElementById('cms-input-summary').value = p.summary;
+      document.getElementById('cms-input-video').value = p.video_url || '';
+      document.getElementById('cms-input-download').value = p.download_url || '';
+      document.getElementById('cms-input-article').value = p.articleHtml;
+      document.getElementById('cms-input-category').value = p.category;
+      document.getElementById('cms-input-price-type').value = p.price_type;
+      document.getElementById('cms-input-price-label').value = p.price_label;
+      document.getElementById('cms-input-version').value = p.version;
+      document.getElementById('cms-input-tags').value = (p.tags || []).join(', ');
+      document.getElementById('cms-input-featured').checked = !!p.featured;
+
+      const coverBox = document.getElementById('cms-cover-preview');
+      if (p.coverImage && p.coverImage.startsWith('<svg')) {
+        coverBox.innerHTML = p.coverImage;
+      } else {
+        coverBox.innerHTML = `<img src="${p.coverImage || '/images/plugin-placeholder.svg'}" style="width:100%; height:100%; object-fit:cover;" />`;
+      }
+
+      previewCmsVideo();
+      document.getElementById('cms-rbz-status').style.display = 'none';
+    }
+
+    function handleCmsCoverUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        cmsCoverDataUrl = evt.target.result;
+        document.getElementById('cms-cover-preview').innerHTML = `<img src="${cmsCoverDataUrl}" style="width:100%; height:100%; object-fit:cover;" />`;
+        alert(`Đã tải lên ảnh: ${file.name}`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleCmsRbz(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const status = document.getElementById('cms-rbz-status');
+      status.innerHTML = `<span class="material-symbols-rounded" style="font-size: 16px; color: #16a34a; vertical-align: middle;">check_circle</span> Đã gắn file: ${file.name}`;
+      status.style.display = 'inline';
+      if (!document.getElementById('cms-input-download').value) {
+        document.getElementById('cms-input-download').value = `/uploads/${file.name}`;
+      }
+    }
+
+    function previewCmsVideo() {
+      const url = document.getElementById('cms-input-video').value.trim();
+      const box = document.getElementById('cms-video-prev-box');
+      const iframe = document.getElementById('cms-video-iframe');
+      const embed = getYouTubeEmbed(url);
+      if (embed) {
+        iframe.src = embed;
+        box.style.display = 'block';
+      } else {
+        iframe.src = '';
+        box.style.display = 'none';
+      }
+    }
+
+    function saveCmsPlugin() {
+      const title = document.getElementById('cms-input-title').value.trim();
+      let slug = document.getElementById('cms-input-slug').value.trim();
+      if (!title) {
+        alert('Vui lòng nhập Tên plugin!');
+        return;
+      }
+      if (!slug) {
+        slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      const pData = {
+        slug: slug,
+        title: title,
+        category: document.getElementById('cms-input-category').value,
+        summary: document.getElementById('cms-input-summary').value.trim(),
+        version: document.getElementById('cms-input-version').value.trim() || '1.0.0',
+        compatibility: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: document.getElementById('cms-input-price-type').value,
+        price_label: document.getElementById('cms-input-price-label').value.trim() || 'Bản Pro',
+        featured: document.getElementById('cms-input-featured').checked,
+        updated_at: new Date().toLocaleDateString('vi-VN'),
+        tags: document.getElementById('cms-input-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+        video_url: document.getElementById('cms-input-video').value.trim(),
+        download_url: document.getElementById('cms-input-download').value.trim(),
+        release_url: "https://github.com/YOUR-GITHUB/tt-plugins/releases",
+        coverImage: cmsCoverDataUrl || `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><rect width="900" height="520" fill="#f0f9ff"/><text x="450" y="270" text-anchor="middle" fill="#0284c7" font-family="'Manrope',sans-serif" font-size="36">${title}</text></svg>`,
+        articleHtml: document.getElementById('cms-input-article').value
+      };
+
+      if (cmsEditingSlug) {
+        const idx = PLUGINS.findIndex(p => p.slug === cmsEditingSlug);
+        if (idx !== -1) PLUGINS[idx] = pData;
+      } else {
+        PLUGINS.unshift(pData);
+      }
+
+      try {
+        localStorage.setItem('TT_PLUGINS_DATA_V2', JSON.stringify(PLUGINS));
+      } catch(e) {}
+
+      alert(`Đã lưu thành công plugin: ${title}!`);
+      renderProGrid();
+      openPluginDetail(slug);
+    }
+
+    function openDeployTab() {
+      alert('Kế hoạch triển khai: Đẩy mã nguồn lên GitHub và kết nối Cloudflare Pages.');
+    }
+
+
+    function checkHashRouting() {
+      if (window.location.hash) {
+        const slug = window.location.hash.replace('#', '').trim();
+        const found = PLUGINS.find(p => p.slug === slug);
+        if (found) {
+          openPluginDetail(slug);
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProGrid();
+      checkHashRouting();
+    });
+    window.addEventListener('hashchange', checkHashRouting);
+    renderProGrid();
+    checkHashRouting();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/tt-plugins
+  branch: main
+  base_url: https://YOUR-OAUTH-WORKER.YOUR-SUBDOMAIN.workers.dev
+  auth_endpoint: auth
+
+site_url: https://tt-plugins.pages.dev
+display_url: https://tt-plugins.pages.dev
+media_folder: public/uploads
+public_folder: /uploads
+
+locale: vi
+publish_mode: simple
+
+collections:
+  - name: plugins
+    label: Plugins
+    label_singular: Plugin
+    folder: src/content/plugins
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} — v{{version}}"
+    sortable_fields: [title, updated_at, version]
+    fields:
+      - { label: "Tên plugin", name: "title", widget: "string" }
+      - { label: "Slug URL", name: "slug", widget: "string", hint: "Ví dụ: tt-multi-view (không dấu, không khoảng trắng)" }
+      - { label: "Danh mục", name: "category", widget: "select", options: ["Workflow", "Geometry", "CAD", "Modeling", "AI", "Architecture", "Utilities"] }
+      - { label: "Mô tả ngắn", name: "summary", widget: "text" }
+      - { label: "Phiên bản", name: "version", widget: "string", default: "1.0.0" }
+      - label: "SketchUp tương thích"
+        name: "compatibility"
+        widget: "list"
+        default: ["SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"]
+      - { label: "Loại sản phẩm", name: "price_type", widget: "select", options: [{ label: "Miễn phí", value: "free" }, { label: "Trả phí (Bản Pro)", value: "paid" }] }
+      - { label: "Nhãn giá", name: "price_label", widget: "string", default: "Miễn phí" }
+      - { label: "Ảnh đại diện chính (Cover Image)", name: "featured_image", widget: "image", default: "/images/plugin-placeholder.svg", hint: "Tải ảnh từ máy tính hoặc chọn ảnh có sẵn" }
+      - label: "Thư viện ảnh minh họa (Gallery Screenshots)"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Ảnh chụp màn hình", name: "image", widget: "image" }
+      - { label: "Link Video Demo / Hướng dẫn (YouTube/Vimeo)", name: "video_url", widget: "string", required: false, hint: "Dán link YouTube, ví dụ: https://www.youtube.com/watch?v=... hoặc https://youtu.be/..." }
+      - { label: "Tiêu đề Video", name: "video_title", widget: "string", required: false, default: "Video demo & Hướng dẫn sử dụng" }
+      - { label: "Link tải file .RBZ (Direct Download URL)", name: "download_url", widget: "string", required: false, hint: "URL tải trực tiếp file .rbz (từ GitHub Releases hoặc Cloudflare R2/S3)" }
+      - { label: "Tải trực tiếp file cài đặt .RBZ", name: "plugin_file", widget: "file", required: false, hint: "Tải file .rbz trực tiếp lên kho lưu trữ uploads (cho file nhẹ dưới 25MB)" }
+      - { label: "Trang GitHub Releases", name: "release_url", widget: "string", required: false }
+      - { label: "Đã xuất bản (Publish)", name: "published", widget: "boolean", default: true }
+      - { label: "Nổi bật (Featured)", name: "featured", widget: "boolean", default: false }
+      - { label: "Ngày cập nhật", name: "updated_at", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+      - { label: "Nội dung chi tiết & Hướng dẫn sử dụng", name: "body", widget: "markdown" }

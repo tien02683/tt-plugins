@@ -1,0 +1,28 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="TT Plugins trang chủ">
+      <span class="brand-mark">TT</span>
+      <span class="brand-name">TT <b>PLUGINS</b><small>SKETCHUP EXTENSIONS</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Điều hướng chính">
+      <a href="/#plugins">Plugins</a>
+      <a href="/#about">Giới thiệu</a>
+      <a href="/portal">Cổng Upload</a>
+      <a href="/admin/" target="_blank" rel="noopener noreferrer">CMS Admin</a>
+    </nav>
+    <a class="header-cta" href="/portal">Cổng Upload <span>↗</span></a>
+    <button class="menu-toggle" aria-label="Mở menu" aria-expanded="false"><span class="material-symbols-rounded">menu</span></button>
+  </div>
+  <div class="mobile-nav" hidden>
+    <a href="/#plugins">Plugins</a><a href="/#about">Giới thiệu</a><a href="/portal">Cổng Upload</a><a href="/admin/" target="_blank" rel="noopener noreferrer">CMS Admin</a>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const mobile = document.querySelector('.mobile-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    mobile?.toggleAttribute('hidden', !open);
+  });
+</script>
