@@ -927,6 +927,243 @@
       .pro-grid-wrap, .pro-detail-container, .pro-controls { padding-left: 20px; padding-right: 20px; }
       .pro-search-box { width: 100%; }
     }
+  
+    /* CAROUSEL & LIGHTBOX STYLES */
+    .carousel-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #0b1329;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12);
+      cursor: zoom-in;
+      user-select: none;
+      outline: none;
+    }
+    .carousel-viewport:focus-visible {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+    }
+    .carousel-slide-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-slide-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      display: block;
+    }
+    .carousel-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+    }
+    .carousel-nav-btn:hover {
+      background: #0284c7;
+      border-color: #38bdf8;
+      transform: translateY(-50%) scale(1.08);
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4);
+    }
+    .carousel-nav-btn.prev-btn { left: 16px; }
+    .carousel-nav-btn.next-btn { right: 16px; }
+    .carousel-nav-btn .material-symbols-rounded { font-size: 26px; }
+    .carousel-footer-bar {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .carousel-counter {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      color: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      pointer-events: auto;
+    }
+    .carousel-zoom-btn {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      color: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: background 0.2s;
+    }
+    .carousel-zoom-btn:hover {
+      background: #0284c7;
+      color: #ffffff;
+    }
+    .carousel-zoom-btn .material-symbols-rounded { font-size: 18px; }
+    .gallery-thumb-strip {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+    }
+    .thumb-item {
+      position: relative;
+      flex: 0 0 110px;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: #0f172a;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      opacity: 0.65;
+    }
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .thumb-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .thumb-item:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    .thumb-item.active {
+      opacity: 1;
+      border-color: #0284c7;
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.35);
+    }
+    .gallery-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 19, 41, 0.94);
+      backdrop-filter: blur(12px);
+    }
+    .lightbox-content {
+      position: relative;
+      z-index: 10;
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .lightbox-caption {
+      color: #e2e8f0;
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      transition: background 0.2s;
+    }
+    .lightbox-close-btn:hover { background: #ef4444; }
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: all 0.2s;
+    }
+    .lightbox-nav-btn:hover { background: #0284c7; transform: translateY(-50%) scale(1.1); }
+    .lightbox-nav-btn.lb-prev { left: 28px; }
+    .lightbox-nav-btn.lb-next { right: 28px; }
+    .lightbox-nav-btn .material-symbols-rounded { font-size: 36px; }
+
   </style>
 </head>
 <body>
@@ -1170,7 +1407,61 @@
 
         <!-- MAIN CONTENT + SIDEBAR -->
         <div class="detail-grid-layout">
-          <article class="pro-prose" id="detail-article-content">
+                  <!-- INTERACTIVE CINEMA CAROUSEL -->
+        <div id="detail-gallery-box" style="margin-bottom: 28px; display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 800; color: #0284c7; letter-spacing: 1.5px; text-transform: uppercase;">
+              HÌNH ẢNH MÔ HÌNH & GIAO DIỆN PREVIEW (SKETCHUP 2023)
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; background: #f1f5f9; padding: 4px 10px; border-radius: 20px; border: 1px solid #e2e8f0;">
+              <span class="material-symbols-rounded" style="font-size: 15px; color: #0284c7;">keyboard</span>
+              <span>Dùng phím <b>←</b> <b>→</b> hoặc chuột để chuyển ảnh</span>
+            </div>
+          </div>
+
+          <div class="carousel-viewport" id="preview-carousel-viewport" tabindex="0" title="Click để phóng to toàn màn hình hoặc dùng phím ← →">
+            <div class="carousel-slide-wrapper">
+              <img id="preview-carousel-img" src="" alt="Hình ảnh mô hình 3D" />
+            </div>
+            
+            <button type="button" class="carousel-nav-btn prev-btn" id="preview-prev-btn" aria-label="Ảnh trước">
+              <span class="material-symbols-rounded">chevron_left</span>
+            </button>
+            <button type="button" class="carousel-nav-btn next-btn" id="preview-next-btn" aria-label="Ảnh kế tiếp">
+              <span class="material-symbols-rounded">chevron_right</span>
+            </button>
+
+            <div class="carousel-footer-bar">
+              <span class="carousel-counter" id="preview-carousel-counter">Slide 1 / 6</span>
+              <button type="button" class="carousel-zoom-btn" id="preview-zoom-btn">
+                <span class="material-symbols-rounded">fullscreen</span> Phóng to
+              </button>
+            </div>
+          </div>
+
+          <!-- Thumbnail Strip -->
+          <div class="gallery-thumb-strip" id="preview-thumb-strip"></div>
+        </div>
+
+        <!-- FULLSCREEN LIGHTBOX MODAL -->
+        <div class="gallery-lightbox" id="preview-lightbox" role="dialog" aria-modal="true" style="display: none;">
+          <div class="lightbox-backdrop" id="preview-lb-backdrop"></div>
+          <button type="button" class="lightbox-close-btn" id="preview-lb-close-btn" aria-label="Đóng phóng to">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+          <button type="button" class="lightbox-nav-btn lb-prev" id="preview-lb-prev" aria-label="Ảnh trước">
+            <span class="material-symbols-rounded">chevron_left</span>
+          </button>
+          <div class="lightbox-content">
+            <img id="preview-lb-img" src="" alt="Phóng to ảnh mô hình" />
+            <div class="lightbox-caption" id="preview-lb-caption">Slide 1 / 6</div>
+          </div>
+          <button type="button" class="lightbox-nav-btn lb-next" id="preview-lb-next" aria-label="Ảnh kế tiếp">
+            <span class="material-symbols-rounded">chevron_right</span>
+          </button>
+        </div>
+
+        <article class="pro-prose" id="detail-article-content">
             <!-- Article content -->
           </article>
 
@@ -1367,6 +1658,14 @@
     const DEFAULT_PLUGINS = [
       {
         slug: "tt-bevel-studio",
+        gallery: [
+          "images/tt-bevel/slide_01_intro.png",
+          "images/tt-bevel/slide_02_profiles.png",
+          "images/tt-bevel/slide_03_hud_studio.png",
+          "images/tt-bevel/slide_04_smart_preview.png",
+          "images/tt-bevel/slide_05_live_stack.png",
+          "images/tt-bevel/slide_06_outro.png"
+        ],
         title: "TT Bevel 2.0 (Vát Cạnh & Phào Chỉ Kiến Trúc)",
         category: "Modeling",
         summary: "Giải pháp vát cạnh và tạo phào chỉ kiến trúc thế hệ mới cho SketchUp. Tích hợp 9 biên dạng mặt cắt, bảng điều khiển HUD nổi trực quan, khung dây cảnh báo thông minh và quy trình Live Bevel phi phá hủy.",
@@ -1493,6 +1792,14 @@
       },
       {
         slug: "tt-architecture",
+        gallery: [
+          "images/tt-architecture/slide_01_intro.png",
+          "images/tt-architecture/slide_02_cad_healing.png",
+          "images/tt-architecture/slide_03_structure_bim.png",
+          "images/tt-architecture/slide_04_smart_wall_doors.png",
+          "images/tt-architecture/slide_05_quantity_bim.png",
+          "images/tt-architecture/slide_06_specs_outro.png"
+        ],
         title: "TT Architecture 3.2 (BIM & Tự Động Dựng Hình CAD Sang 3D)",
         category: "CAD",
         summary: "Tự động hóa toàn diện quy trình dựng hình 3D từ bản vẽ CAD 2D trong SketchUp: Vá hở đường nét, đẩy khối tường, sinh hệ kết cấu cột dầm sàn móng và tự động đục lỗ cửa Xingfa 55.",
@@ -1861,6 +2168,97 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    
+    // Detail Gallery Carousel state
+    let detailCurrentGallery = [];
+    let detailCurrentIndex = 0;
+
+    function renderDetailGallery(gallery) {
+      const box = document.getElementById('detail-gallery-box');
+      if (!gallery || gallery.length === 0) {
+        box.style.display = 'none';
+        return;
+      }
+      box.style.display = 'block';
+      detailCurrentGallery = gallery;
+      detailCurrentIndex = 0;
+
+      const strip = document.getElementById('preview-thumb-strip');
+      strip.innerHTML = gallery.map((img, i) => `
+        <button type="button" class="thumb-item ${i === 0 ? 'active' : ''}" data-index="${i}" onclick="setDetailSlide(${i})">
+          <img src="${img}" alt="Thumb ${i+1}" />
+          <span class="thumb-badge">${i+1}</span>
+        </button>
+      `).join('');
+
+      setDetailSlide(0, false);
+    }
+
+    function setDetailSlide(idx, animate = true) {
+      if (!detailCurrentGallery || detailCurrentGallery.length === 0) return;
+      const total = detailCurrentGallery.length;
+      if (idx < 0) idx = total - 1;
+      if (idx >= total) idx = 0;
+      detailCurrentIndex = idx;
+
+      const img = document.getElementById('preview-carousel-img');
+      const counter = document.getElementById('preview-carousel-counter');
+      const lb = document.getElementById('preview-lightbox');
+      const lbImg = document.getElementById('preview-lb-img');
+      const lbCaption = document.getElementById('preview-lb-caption');
+
+      if (img) {
+        if (animate) {
+          img.style.opacity = '0.35';
+          img.style.transform = 'scale(0.995)';
+          setTimeout(() => {
+            img.src = detailCurrentGallery[detailCurrentIndex];
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+          }, 110);
+        } else {
+          img.src = detailCurrentGallery[detailCurrentIndex];
+        }
+      }
+
+      if (counter) {
+        counter.innerText = `Slide ${detailCurrentIndex + 1} / ${total}`;
+      }
+
+      const thumbs = document.querySelectorAll('#preview-thumb-strip .thumb-item');
+      thumbs.forEach((t, i) => {
+        if (i === detailCurrentIndex) {
+          t.classList.add('active');
+          t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          t.classList.remove('active');
+        }
+      });
+
+      if (lb && lb.style.display !== 'none') {
+        if (lbImg) lbImg.src = detailCurrentGallery[detailCurrentIndex];
+        if (lbCaption) lbCaption.innerText = `Slide ${detailCurrentIndex + 1} / ${total}`;
+      }
+    }
+
+    function openPreviewLightbox() {
+      const lb = document.getElementById('preview-lightbox');
+      if (!lb || !detailCurrentGallery.length) return;
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      const lbImg = document.getElementById('preview-lb-img');
+      const lbCaption = document.getElementById('preview-lb-caption');
+      if (lbImg) lbImg.src = detailCurrentGallery[detailCurrentIndex];
+      if (lbCaption) lbCaption.innerText = `Slide ${detailCurrentIndex + 1} / ${detailCurrentGallery.length}`;
+    }
+
+    function closePreviewLightbox() {
+      const lb = document.getElementById('preview-lightbox');
+      if (!lb) return;
+      lb.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
     function openPluginDetail(slug) {
       const p = PLUGINS.find(item => item.slug === slug) || PLUGINS[0];
 
@@ -1955,6 +2353,7 @@
       }
 
       // Article Body
+      renderDetailGallery(p.gallery || []);
       document.getElementById('detail-article-content').innerHTML = p.articleHtml;
 
       // Specs

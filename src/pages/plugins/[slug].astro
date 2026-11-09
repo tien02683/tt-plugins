@@ -83,17 +83,212 @@ const embedUrl = getYouTubeEmbed(d.video_url);
           )}
 
           {d.gallery && d.gallery.length > 0 && (
-            <div class="gallery-section">
-              <div class="content-eyebrow">HÌNH ẢNH MÔ HÌNH & GIAO DIỆN</div>
-              <div class="gallery-grid">
+            <div class="gallery-section" id="gallery-carousel-root">
+              <div class="gallery-header-row">
+                <div class="content-eyebrow">HÌNH ẢNH MÔ HÌNH & GIAO DIỆN</div>
+                <div class="gallery-hint">
+                  <span class="material-symbols-rounded">keyboard</span>
+                  <span>Phím <b>←</b> <b>→</b> hoặc chuột để chuyển ảnh</span>
+                </div>
+              </div>
+
+              <!-- MAIN INTERACTIVE SLIDER VIEW -->
+              <div class="carousel-viewport" id="carousel-viewport" tabindex="0" title="Click để phóng to toàn màn hình hoặc dùng phím ← →">
+                <div class="carousel-slide-wrapper">
+                  <img id="carousel-main-img" src={d.gallery[0]} alt="Hình ảnh mô hình 3D" loading="eager" />
+                </div>
+                
+                <!-- Floating Nav Arrows -->
+                <button type="button" class="carousel-nav-btn prev-btn" id="carousel-prev-btn" aria-label="Ảnh trước">
+                  <span class="material-symbols-rounded">chevron_left</span>
+                </button>
+                <button type="button" class="carousel-nav-btn next-btn" id="carousel-next-btn" aria-label="Ảnh kế tiếp">
+                  <span class="material-symbols-rounded">chevron_right</span>
+                </button>
+
+                <!-- Floating Bottom Badge & Zoom -->
+                <div class="carousel-footer-bar">
+                  <span class="carousel-counter" id="carousel-counter">Slide 1 / {d.gallery.length}</span>
+                  <button type="button" class="carousel-zoom-btn" id="carousel-zoom-btn" title="Phóng to toàn màn hình">
+                    <span class="material-symbols-rounded">fullscreen</span> Phóng to
+                  </button>
+                </div>
+              </div>
+
+              <!-- THUMBNAIL STRIP -->
+              <div class="gallery-thumb-strip" id="gallery-thumb-strip">
                 {d.gallery.map((img: string, i: number) => (
-                  <a href={img} target="_blank" class="gallery-item">
-                    <img src={img} alt={`Screenshot ${i + 1}`} loading="lazy" />
-                  </a>
+                  <button type="button" class:list={["thumb-item", { active: i === 0 }]} data-index={i} aria-label={`Xem slide ${i + 1}`}>
+                    <img src={img} alt={`Thumbnail ${i + 1}`} loading="lazy" />
+                    <span class="thumb-badge">{i + 1}</span>
+                  </button>
                 ))}
+              </div>
+
+              <!-- FULLSCREEN LIGHTBOX MODAL -->
+              <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" style="display: none;">
+                <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+                <button type="button" class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Đóng phóng to">
+                  <span class="material-symbols-rounded">close</span>
+                </button>
+                <button type="button" class="lightbox-nav-btn lb-prev" id="lb-prev-btn" aria-label="Ảnh trước">
+                  <span class="material-symbols-rounded">chevron_left</span>
+                </button>
+                <div class="lightbox-content">
+                  <img id="lightbox-img" src={d.gallery[0]} alt="Phóng to ảnh mô hình" />
+                  <div class="lightbox-caption" id="lightbox-caption">Slide 1 / {d.gallery.length}</div>
+                </div>
+                <button type="button" class="lightbox-nav-btn lb-next" id="lb-next-btn" aria-label="Ảnh kế tiếp">
+                  <span class="material-symbols-rounded">chevron_right</span>
+                </button>
               </div>
             </div>
           )}
+
+          <script is:inline define:vars={{ galleryList: d.gallery || [] }}>
+            (function() {
+              const gallery = galleryList;
+              if (!gallery || gallery.length === 0) return;
+              let currentIndex = 0;
+              const total = gallery.length;
+
+              const mainImg = document.getElementById('carousel-main-img');
+              const counter = document.getElementById('carousel-counter');
+              const prevBtn = document.getElementById('carousel-prev-btn');
+              const nextBtn = document.getElementById('carousel-next-btn');
+              const zoomBtn = document.getElementById('carousel-zoom-btn');
+              const viewport = document.getElementById('carousel-viewport');
+              const thumbItems = document.querySelectorAll('#gallery-thumb-strip .thumb-item');
+
+              const lightbox = document.getElementById('gallery-lightbox');
+              const lbBackdrop = document.getElementById('lightbox-backdrop');
+              const lbCloseBtn = document.getElementById('lightbox-close-btn');
+              const lbImg = document.getElementById('lightbox-img');
+              const lbCaption = document.getElementById('lightbox-caption');
+              const lbPrevBtn = document.getElementById('lb-prev-btn');
+              const lbNextBtn = document.getElementById('lb-next-btn');
+
+              function updateSlide(idx, animate = true) {
+                if (idx < 0) idx = total - 1;
+                if (idx >= total) idx = 0;
+                currentIndex = idx;
+
+                if (mainImg) {
+                  if (animate) {
+                    mainImg.style.opacity = '0.35';
+                    mainImg.style.transform = 'scale(0.995)';
+                    setTimeout(() => {
+                      mainImg.src = gallery[currentIndex];
+                      mainImg.style.opacity = '1';
+                      mainImg.style.transform = 'scale(1)';
+                    }, 120);
+                  } else {
+                    mainImg.src = gallery[currentIndex];
+                  }
+                }
+
+                if (counter) {
+                  counter.textContent = `Slide ${currentIndex + 1} / ${total}`;
+                }
+
+                thumbItems.forEach((btn, i) => {
+                  if (i === currentIndex) {
+                    btn.classList.add('active');
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                  } else {
+                    btn.classList.remove('active');
+                  }
+                });
+
+                if (lightbox && lightbox.style.display !== 'none') {
+                  if (lbImg) lbImg.src = gallery[currentIndex];
+                  if (lbCaption) lbCaption.textContent = `Slide ${currentIndex + 1} / ${total}`;
+                }
+              }
+
+              if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); updateSlide(currentIndex - 1); });
+              if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); updateSlide(currentIndex + 1); });
+
+              thumbItems.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                  const idx = parseInt(btn.getAttribute('data-index') || '0', 10);
+                  updateSlide(idx);
+                });
+              });
+
+              function openLightbox() {
+                if (!lightbox) return;
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                if (lbImg) lbImg.src = gallery[currentIndex];
+                if (lbCaption) lbCaption.textContent = `Slide ${currentIndex + 1} / ${total}`;
+              }
+
+              function closeLightbox() {
+                if (!lightbox) return;
+                lightbox.style.display = 'none';
+                document.body.style.overflow = '';
+              }
+
+              if (viewport) {
+                viewport.addEventListener('click', (e) => {
+                  if (e.target.closest('.carousel-nav-btn')) return;
+                  openLightbox();
+                });
+              }
+              if (zoomBtn) zoomBtn.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(); });
+              if (lbCloseBtn) lbCloseBtn.addEventListener('click', closeLightbox);
+              if (lbBackdrop) lbBackdrop.addEventListener('click', closeLightbox);
+              if (lbPrevBtn) lbPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); updateSlide(currentIndex - 1); });
+              if (lbNextBtn) lbNextBtn.addEventListener('click', (e) => { e.stopPropagation(); updateSlide(currentIndex + 1); });
+
+              // Keyboard navigation
+              window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                  updateSlide(currentIndex - 1);
+                } else if (e.key === 'ArrowRight') {
+                  updateSlide(currentIndex + 1);
+                } else if (e.key === 'Escape') {
+                  closeLightbox();
+                }
+              });
+
+              // Mouse Drag navigation
+              let startX = 0;
+              let isDragging = false;
+              if (viewport) {
+                viewport.addEventListener('mousedown', (e) => {
+                  if (e.target.closest('.carousel-nav-btn') || e.target.closest('.carousel-footer-bar')) return;
+                  startX = e.clientX;
+                  isDragging = true;
+                });
+                viewport.addEventListener('mouseup', (e) => {
+                  if (!isDragging) return;
+                  isDragging = false;
+                  const diff = e.clientX - startX;
+                  if (diff > 45) {
+                    updateSlide(currentIndex - 1);
+                  } else if (diff < -45) {
+                    updateSlide(currentIndex + 1);
+                  }
+                });
+                viewport.addEventListener('mouseleave', () => { isDragging = false; });
+
+                // Mobile touch
+                viewport.addEventListener('touchstart', (e) => {
+                  startX = e.touches[0].clientX;
+                }, { passive: true });
+                viewport.addEventListener('touchend', (e) => {
+                  const diff = e.changedTouches[0].clientX - startX;
+                  if (diff > 45) {
+                    updateSlide(currentIndex - 1);
+                  } else if (diff < -45) {
+                    updateSlide(currentIndex + 1);
+                  }
+                }, { passive: true });
+              }
+            })();
+          </script>
 
           <div class="content-eyebrow">ABOUT THIS EXTENSION</div>
           <Content />
@@ -184,4 +379,277 @@ const embedUrl = getYouTubeEmbed(d.video_url);
   .gallery-item:hover img {
     transform: scale(1.04);
   }
+
+  /* ========================================================= */
+  /* INTERACTIVE CINEMA CAROUSEL & LIGHTBOX                    */
+  /* ========================================================= */
+  .gallery-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .gallery-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+  }
+  .gallery-hint .material-symbols-rounded {
+    font-size: 15px;
+    color: #0284c7;
+  }
+  .carousel-viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0b1329;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12);
+    cursor: zoom-in;
+    user-select: none;
+    outline: none;
+  }
+  .carousel-viewport:focus-visible {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+  }
+  .carousel-slide-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .carousel-slide-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    display: block;
+  }
+  .carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+  }
+  .carousel-nav-btn:hover {
+    background: #0284c7;
+    border-color: #38bdf8;
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4);
+  }
+  .carousel-nav-btn.prev-btn { left: 16px; }
+  .carousel-nav-btn.next-btn { right: 16px; }
+  .carousel-nav-btn .material-symbols-rounded {
+    font-size: 28px;
+  }
+  .carousel-footer-bar {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .carousel-counter {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    color: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    pointer-events: auto;
+  }
+  .carousel-zoom-btn {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    color: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: background 0.2s;
+  }
+  .carousel-zoom-btn:hover {
+    background: #0284c7;
+    color: #ffffff;
+  }
+  .carousel-zoom-btn .material-symbols-rounded {
+    font-size: 18px;
+  }
+
+  /* THUMBNAIL STRIP */
+  .gallery-thumb-strip {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+  }
+  .thumb-item {
+    position: relative;
+    flex: 0 0 110px;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: #0f172a;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.65;
+  }
+  .thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .thumb-badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .thumb-item:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  .thumb-item.active {
+    opacity: 1;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.35);
+  }
+
+  /* FULLSCREEN LIGHTBOX */
+  .gallery-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 19, 41, 0.94);
+    backdrop-filter: blur(12px);
+  }
+  .lightbox-content {
+    position: relative;
+    z-index: 10;
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    object-fit: contain;
+  }
+  .lightbox-caption {
+    color: #e2e8f0;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .lightbox-close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: background 0.2s;
+  }
+  .lightbox-close-btn:hover {
+    background: #ef4444;
+  }
+  .lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.2s;
+  }
+  .lightbox-nav-btn:hover {
+    background: #0284c7;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .lightbox-nav-btn.lb-prev { left: 28px; }
+  .lightbox-nav-btn.lb-next { right: 28px; }
+  .lightbox-nav-btn .material-symbols-rounded { font-size: 36px; }
+
 </style>
