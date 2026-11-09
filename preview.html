@@ -1790,7 +1790,127 @@
           </div>
 `
       },
-      {
+            {
+        slug: "tt-pdf-importer",
+        gallery: [
+          "images/tt-pdf-importer/slide_01_intro.png",
+          "images/tt-pdf-importer/slide_02_vector_curves.png",
+          "images/tt-pdf-importer/slide_03_scale_layers.png",
+          "images/tt-pdf-importer/slide_04_vietnamese_text.png",
+          "images/tt-pdf-importer/slide_05_cad_options.png",
+          "images/tt-pdf-importer/slide_06_batch_export.png"
+        ],
+        title: "TT PDF to SU 3.0 (Chuyển Đổi PDF Vector Sang SketchUp CAD)",
+        category: "CAD",
+        summary: "Nhập trực tiếp bản vẽ kỹ thuật định dạng PDF sang đối tượng hình học CAD vector trong SketchUp: Giữ nguyên nét vẽ sắc nét, đường cong Bezier, nhận diện text Tiếng Việt, tự động hiệu chuẩn tỉ lệ và xuất hàng loạt Scene.",
+        version: "3.0.0",
+        compatibility: ["SketchUp 2021", "SketchUp 2022", "SketchUp 2023", "SketchUp 2024", "SketchUp 2026", "SketchUp 2027"],
+        price_type: "paid",
+        price_label: "Bản Pro · Dùng thử 15 ngày",
+        featured: true,
+        updated_at: "09/11/2026",
+        tags: ["PDF to CAD", "PDF to SketchUp", "Vector Importer", "Nhập bản vẽ PDF", "Hershey Text", "TCVN3 Unicode", "Flatten Z", "Export Scene 8K"],
+        video_url: "",
+        plugin_file: "",
+        download_url: "",
+        release_url: "https://github.com/tien02683/tt-plugins/releases",
+        coverImage: "images/tt-pdf-importer/slide_01_intro.png",
+        articleHtml: `
+          <h2>Tổng Quan Về TT PDF to SU 3.0 (PDF Vector Importer)</h2>
+          <p>
+            Trong thực tế công việc thiết kế kiến trúc, quy hoạch và kết cấu, rất nhiều hồ sơ bản vẽ chỉ được bàn giao dưới định dạng file <strong>PDF</strong>.
+            <strong>TT PDF to SU 3.0</strong> là giải pháp đột phá giúp bạn trích xuất trực tiếp toàn bộ dữ liệu vector hình học nhị phân từ file PDF vào SketchUp.
+            Từng đường bao tường, tim trục, cửa sổ, thiết bị công nghiệp và nhãn văn bản tiếng Việt đều được tái tạo chuẩn xác 100% dưới dạng nét CAD và mặt phẳng 3D sắc nét.
+          </p>
+
+          <!-- IMAGE GALLERY SHOWCASE (6 SLIDES) -->
+          <div style="margin: 28px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-pdf-importer/slide_01_intro.png" onerror="this.src='public/images/tt-pdf-importer/slide_01_intro.png';" style="width: 100%; height: auto; display: block;" alt="TT PDF to SU Intro" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                1. Chuyển đổi PDF Vector sang CAD 100%
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-pdf-importer/slide_02_vector_curves.png" onerror="this.src='public/images/tt-pdf-importer/slide_02_vector_curves.png';" style="width: 100%; height: auto; display: block;" alt="Bóc tách Vector & Khử Rác" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                2. Bóc tách vector, nội suy Bezier mượt mà
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-pdf-importer/slide_03_scale_layers.png" onerror="this.src='public/images/tt-pdf-importer/slide_03_scale_layers.png';" style="width: 100%; height: auto; display: block;" alt="Phân nhóm Layer & Tỉ lệ" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                3. Hiệu chuẩn tỉ lệ & gom nhóm Layer theo màu
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-pdf-importer/slide_04_vietnamese_text.png" onerror="this.src='public/images/tt-pdf-importer/slide_04_vietnamese_text.png';" style="width: 100%; height: auto; display: block;" alt="Bảo toàn Text Tiếng Việt" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                4. Nhận diện chữ tiếng Việt TCVN3 / VNI / Unicode
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-pdf-importer/slide_05_cad_options.png" onerror="this.src='public/images/tt-pdf-importer/slide_05_cad_options.png';" style="width: 100%; height: auto; display: block;" alt="Tùy chọn DWG / DXF" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                5. Tùy chọn nhập DWG/DXF (Flatten Z, Coplanar)
+              </div>
+            </div>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.04);">
+              <img src="images/tt-pdf-importer/slide_06_batch_export.png" onerror="this.src='public/images/tt-pdf-importer/slide_06_batch_export.png';" style="width: 100%; height: auto; display: block;" alt="Export SU Hàng Loạt" />
+              <div style="padding: 12px 14px; font-size: 13px; font-weight: 700; color: #0f172a; border-top: 1px solid #f1f5f9;">
+                6. Xuất hàng loạt Scene ra ảnh 8K, PDF & DWG
+              </div>
+            </div>
+          </div>
+
+          <h2>6 Tính Năng Cốt Lõi Trên TT PDF to SU 3.0</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin: 20px 0;">
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">1. Bóc Tách Vector Thuần Túy 100%</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Đọc cây toán tử đồ họa PDF, trích xuất chuẩn xác từng nét vẽ, khử nét rác ngoài khung và nội suy mượt mà đường cong Bezier cubic.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">2. Giao Diện Xem Trước Trực Quan & Chọn Từng Trang</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Xem toàn bộ danh sách trang trong tập hồ sơ PDF, kiểm tra bản vẽ trước khi nhập và tự động dàn trang với khoảng cách 100mm.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">3. Tự Động Cân Chỉnh Tỉ Lệ Bản Vẽ & Khổ Giấy</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Hỗ trợ khổ giấy A0, A1, A2, A3, A4 và mọi tỉ lệ thông dụng 1:20 đến 1:200, chuyển đổi toạ độ chính xác sang milimet thực tế.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">4. Bảo Toàn Text Tiếng Việt & Bảng Mã Đa Dạng</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Giải mã các font TCVN3, VNI và Unicode sang 2D Hershey Vector Text hoặc khối 3D Text mà không bao giờ bị lỗi font.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">5. Tùy Chọn Nhập AutoCAD DWG/DXF Chuyên Sâu</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Chiếu phẳng Z (True Flatten Z), hàn liền mặt đồng phẳng (Coplanar merge) và phân nhóm Layer Tag khoa học.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+              <span class="material-symbols-rounded" style="color: #10b981; font-size: 24px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <div>
+                <strong style="color: #0f172a; font-size: 15px; display: block; margin-bottom: 4px;">6. Export SU Hàng Loạt Ra Ảnh 4K/8K, PDF & DWG</strong>
+                <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.6;">Tự động duyệt qua toàn bộ Scene trong model, xuất ảnh độ phân giải cao lên đến 8K UHD hoặc PDF in ấn A3/A1 300 DPI nhanh chóng.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+{
         slug: "tt-architecture",
         gallery: [
           "images/tt-architecture/slide_01_intro.png",

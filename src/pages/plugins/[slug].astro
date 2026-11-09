@@ -48,7 +48,7 @@ const embedUrl = getYouTubeEmbed(d.video_url);
                 Tải plugin (.rbz) <span>↓</span>
               </a>
             ) : (
-              <span class="btn btn-disabled">Chưa có file tải</span>
+              <span class="btn btn-disabled"><span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle; margin-right: 6px;">schedule</span>Chờ cập nhật link tải (.rbz)</span>
             )}
             {d.release_url && (
               <a class="btn btn-outline" href={d.release_url} target="_blank" rel="noopener noreferrer">
@@ -57,7 +57,7 @@ const embedUrl = getYouTubeEmbed(d.video_url);
             )}
           </div>
           {!download && (
-            <p class="download-note">Chủ website cần cập nhật URL tải file RBZ trong CMS trước khi phát hành.</p>
+            <p class="download-note">Liên kết tải cài đặt .RBZ và video demo đang được hoàn thiện và sẽ sớm khả dụng.</p>
           )}
         </div>
         <div class="product-cover">
