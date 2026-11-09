@@ -116,6 +116,33 @@
       color: #ffffff !important;
     }
 
+    
+    /* VIDEO TAB SWITCHER STYLING */
+    .btn-video-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-video-tab:hover {
+      color: #0f172a;
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .btn-video-tab.active {
+      color: #0f172a;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
     /* ---------------- 1. LIGHT SIDEBAR (PRO MAX DRAWER) ---------------- */
     .pro-sidebar {
       width: 260px;
@@ -1093,11 +1120,51 @@
           <span id="detail-ai-takeaway">Công cụ giúp tối ưu đa giác thông minh, tự động loại bỏ cạnh đồng phẳng, làm nhẹ bản vẽ tức thì cho SketchUp 2023 - 2027.</span>
         </div>
 
-        <!-- VIDEO EMBED SECTION IF AVAILABLE -->
+        <!-- VIDEO PLAYER SECTION (HYBRID DUAL-PLAYER: LOCAL MP4 + YOUTUBE EMBED) -->
         <div id="detail-video-box" style="display: none; margin-bottom: 32px;">
-          <h3 style="font: 800 18px 'Manrope'; margin: 0 0 12px; color: var(--text-main);"><span class="material-symbols-rounded filled" style="color: #ef4444; font-size: 22px; vertical-align: middle;">smart_display</span> Video Demo & Hướng Dẫn Kỹ Thuật</h3>
-          <div style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius-md); overflow: hidden; background: #000; box-shadow: var(--shadow-card);">
-            <iframe id="detail-video-iframe" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font: 800 18px 'Manrope', sans-serif; margin: 0; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+              <span class="material-symbols-rounded filled" style="color: #ef4444; font-size: 22px;">smart_display</span>
+              <span id="detail-video-heading">Video Demo & Hướng Dẫn Kỹ Thuật</span>
+            </h3>
+
+            <!-- Switcher Tabs -->
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 8px;">
+              <button id="btn-mode-mp4" class="btn-video-tab active" onclick="switchVideoMode('mp4')">
+                <span class="material-symbols-rounded" style="font-size: 16px; color: #16a34a;">play_circle</span> Video MP4 Trực Tiếp
+              </button>
+              <button id="btn-mode-yt" class="btn-video-tab" onclick="switchVideoMode('youtube')">
+                <span class="material-symbols-rounded" style="font-size: 16px; color: #ef4444;">smart_display</span> YouTube Embed
+              </button>
+              <a id="btn-yt-external" href="https://youtu.be/eDy_cCu2nss" target="_blank" class="btn-video-tab" style="color: #0284c7;">
+                <span>Xem trên YouTube</span> <span class="material-symbols-rounded" style="font-size: 14px;">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Video Display Container -->
+          <div style="position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius-md); overflow: hidden; background: #000; box-shadow: 0 4px 20px rgba(15,23,42,0.12);">
+            <!-- 1. HTML5 MP4 Player (Always works 100% on local file:// with ZERO errors) -->
+            <video id="detail-video-mp4" controls preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0; display:block;" poster="images/tt-bevel/slide_01_intro.png">
+              <source id="detail-video-mp4-src" src="images/tt-bevel/TT_Bevel_2_Intro.mp4" type="video/mp4" />
+              Trình duyệt của bạn không hỗ trợ thẻ video HTML5.
+            </video>
+
+            <!-- 2. YouTube Iframe Player (With complete attributes & oEmbed specs) -->
+            <iframe id="detail-video-iframe" 
+              style="position: absolute; top:0; left:0; width:100%; height:100%; border:0; display:none;" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin" 
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <!-- Explanatory note about Error 153 on file:// -->
+          <div id="video-embed-notice" style="margin-top: 10px; font-size: 12px; color: #64748b; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;">
+            <span class="material-symbols-rounded" style="color: #0284c7; font-size: 18px; flex-shrink: 0; margin-top: 1px;">info</span>
+            <div>
+              <strong>Lưu ý về YouTube Error 153:</strong> Lỗi 153 xuất hiện do YouTube thắt chặt chính sách bảo mật, tự động chặn iframe khi mở file trực tiếp từ ổ đĩa máy tính (giao thức <code>file:///</code> không gửi HTTP Referrer). Khi website được đưa lên server (Cloudflare Pages hoặc Vercel), YouTube embed sẽ phát bình thường. Để xem mượt mà ngay lúc này trên máy cục bộ, bạn chỉ cần xem qua tab <strong>"Video MP4 Trực Tiếp"</strong> ở trên hoặc bấm <strong>"Xem trên YouTube ↗"</strong>.
+            </div>
           </div>
         </div>
 
@@ -1549,7 +1616,30 @@
       if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       const match = url.match(regExp);
-      return (match && match[2].length === 11) ? `https://www.youtube-nocookie.com/embed/${match[2]}` : null;
+      return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}?feature=oembed&rel=0` : null;
+    }
+
+    let currentVideoMode = 'mp4';
+
+    function switchVideoMode(mode) {
+      currentVideoMode = mode;
+      const mp4El = document.getElementById('detail-video-mp4');
+      const ytEl = document.getElementById('detail-video-iframe');
+      const btnMp4 = document.getElementById('btn-mode-mp4');
+      const btnYt = document.getElementById('btn-mode-yt');
+
+      if (mode === 'mp4') {
+        mp4El.style.display = 'block';
+        ytEl.style.display = 'none';
+        btnMp4.classList.add('active');
+        btnYt.classList.remove('active');
+      } else {
+        mp4El.pause();
+        mp4El.style.display = 'none';
+        ytEl.style.display = 'block';
+        btnMp4.classList.remove('active');
+        btnYt.classList.add('active');
+      }
     }
 
     // RENDER SUCJ PRO MAX GRID
@@ -1695,16 +1785,55 @@
         history.replaceState(null, null, '#' + p.slug);
       }
 
-      // Video Embed
+      // Video Embed & Local MP4 Player
       const videoWrapper = document.getElementById('detail-video-box');
       const videoIframe = document.getElementById('detail-video-iframe');
+      const videoMp4 = document.getElementById('detail-video-mp4');
+      const btnMp4 = document.getElementById('btn-mode-mp4');
+      const btnYt = document.getElementById('btn-mode-yt');
+      const btnYtExt = document.getElementById('btn-yt-external');
+
       const embed = getYouTubeEmbed(p.video_url);
-      if (embed) {
-        videoIframe.src = embed;
+      const localMp4 = (p.slug === 'tt-bevel-studio') ? 'images/tt-bevel/TT_Bevel_2_Intro.mp4' : null;
+
+      if (embed || localMp4) {
         videoWrapper.style.display = 'block';
+
+        if (p.video_url) {
+          btnYtExt.href = p.video_url;
+          btnYtExt.style.display = 'inline-flex';
+        } else {
+          btnYtExt.style.display = 'none';
+        }
+
+        if (embed) {
+          videoIframe.src = embed;
+          btnYt.style.display = 'inline-flex';
+        } else {
+          videoIframe.src = '';
+          btnYt.style.display = 'none';
+        }
+
+        if (localMp4) {
+          videoMp4.src = localMp4;
+          videoMp4.poster = p.coverImage || 'images/tt-bevel/slide_01_intro.png';
+          btnMp4.style.display = 'inline-flex';
+          // On local file:// protocol, default to MP4 to prevent Error 153!
+          if (window.location.protocol === 'file:') {
+            switchVideoMode('mp4');
+          } else {
+            switchVideoMode('youtube');
+          }
+        } else {
+          videoMp4.src = '';
+          btnMp4.style.display = 'none';
+          switchVideoMode('youtube');
+        }
       } else {
-        videoIframe.src = '';
         videoWrapper.style.display = 'none';
+        videoIframe.src = '';
+        videoMp4.pause();
+        videoMp4.src = '';
       }
 
       // Article Body

@@ -7,17 +7,73 @@
     <nav class="desktop-nav" aria-label="Điều hướng chính">
       <a href="/#plugins">Plugins</a>
       <a href="/#about">Giới thiệu</a>
-      <a href="/portal">Cổng Upload</a>
-      <a href="/admin/" target="_blank" rel="noopener noreferrer">CMS Admin</a>
+      <a href="/#support">Hỗ trợ</a>
+      <!-- Chỉ hiển thị cho Admin khi đã đăng nhập -->
+      <a href="/portal" class="admin-only-item" style="display:none; color:#0284c7; font-weight:700;">Cổng Upload</a>
+      <a href="/admin/" target="_blank" rel="noopener noreferrer" class="admin-only-item" style="display:none; color:#0284c7;">CMS Admin</a>
     </nav>
-    <a class="header-cta" href="/portal">Cổng Upload <span>↗</span></a>
+    <div class="header-action-wrap" style="display:flex; align-items:center; gap:10px;">
+      <!-- Nút mặc định cho khách công khai: Nhóm Zalo hỗ trợ -->
+      <a class="header-cta public-cta" href="https://zalo.me/g/nnukch714" target="_blank" rel="noopener noreferrer">Nhóm Zalo <span>↗</span></a>
+      <!-- Cụm nút chỉ hiển thị cho Admin -->
+      <div class="admin-cta-group" style="display:none; align-items:center; gap:8px;">
+        <a class="header-cta admin-upload-btn" href="/portal" style="background:#0284c7; color:#fff; border-color:#0284c7;">Cổng Upload <span>↗</span></a>
+        <button id="header-admin-logout" type="button" title="Đăng xuất quyền Admin" style="background:transparent; border:1px solid #cbd5e1; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:600; color:#64748b; cursor:pointer;">Thoát</button>
+      </div>
+    </div>
     <button class="menu-toggle" aria-label="Mở menu" aria-expanded="false"><span class="material-symbols-rounded">menu</span></button>
   </div>
   <div class="mobile-nav" hidden>
-    <a href="/#plugins">Plugins</a><a href="/#about">Giới thiệu</a><a href="/portal">Cổng Upload</a><a href="/admin/" target="_blank" rel="noopener noreferrer">CMS Admin</a>
+    <a href="/#plugins">Plugins</a>
+    <a href="/#about">Giới thiệu</a>
+    <a href="/#support">Hỗ trợ</a>
+    <a href="https://zalo.me/g/nnukch714" target="_blank" rel="noopener noreferrer">Nhóm Zalo hỗ trợ ↗</a>
+    <div class="mobile-admin-section" style="display:none; border-top:1px solid #e2e8f0; margin-top:8px; padding-top:8px;">
+      <a href="/portal" style="color:#0284c7; font-weight:700;">🛡️ Cổng Upload Admin</a>
+      <a href="/admin/" target="_blank" rel="noopener noreferrer" style="color:#0284c7;">CMS Quản trị (Decap) ↗</a>
+      <a href="javascript:void(0)" id="mobile-logout-link" style="color:#ef4444;">Đăng xuất Admin</a>
+    </div>
   </div>
 </header>
+
 <script>
+  function updateAdminNavbar() {
+    const isAdmin = localStorage.getItem('tt_admin_logged_in') === 'true';
+    const adminItems = document.querySelectorAll('.admin-only-item');
+    const adminGroups = document.querySelectorAll('.admin-cta-group');
+    const publicCtas = document.querySelectorAll('.public-cta');
+    const mobileAdmin = document.querySelectorAll('.mobile-admin-section');
+
+    if (isAdmin) {
+      adminItems.forEach(el => (el as HTMLElement).style.display = 'inline-flex');
+      adminGroups.forEach(el => (el as HTMLElement).style.display = 'inline-flex');
+      mobileAdmin.forEach(el => (el as HTMLElement).style.display = 'block');
+      publicCtas.forEach(el => (el as HTMLElement).style.display = 'none');
+    } else {
+      adminItems.forEach(el => (el as HTMLElement).style.display = 'none');
+      adminGroups.forEach(el => (el as HTMLElement).style.display = 'none');
+      mobileAdmin.forEach(el => (el as HTMLElement).style.display = 'none');
+      publicCtas.forEach(el => (el as HTMLElement).style.display = 'inline-flex');
+    }
+  }
+
+  function handleAdminLogout() {
+    localStorage.removeItem('tt_admin_logged_in');
+    sessionStorage.removeItem('tt_admin_session');
+    updateAdminNavbar();
+    window.dispatchEvent(new Event('admin-auth-changed'));
+    if (window.location.pathname.startsWith('/portal')) {
+      window.location.reload();
+    }
+  }
+
+  document.getElementById('header-admin-logout')?.addEventListener('click', handleAdminLogout);
+  document.getElementById('mobile-logout-link')?.addEventListener('click', handleAdminLogout);
+
+  window.addEventListener('admin-auth-changed', updateAdminNavbar);
+  window.addEventListener('storage', updateAdminNavbar);
+  updateAdminNavbar();
+
   const toggle = document.querySelector('.menu-toggle');
   const mobile = document.querySelector('.mobile-nav');
   toggle?.addEventListener('click', () => {

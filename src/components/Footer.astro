@@ -8,8 +8,9 @@
       <h4>Khám phá</h4>
       <a href="/#plugins">Tất cả plugin</a>
       <a href="/#about">Về TT Plugins</a>
-      <a href="/portal">Cổng Upload</a>
-      <a href="/admin/" target="_blank" rel="noopener noreferrer">CMS Quản trị</a>
+      <!-- Chỉ xuất hiện khi Admin đăng nhập -->
+      <a href="/portal" class="admin-only-footer-link" style="display:none; color:#38bdf8;">🛡️ Cổng Upload</a>
+      <a href="/admin/" target="_blank" rel="noopener noreferrer" class="admin-only-footer-link" style="display:none; color:#38bdf8;">CMS Quản trị ↗</a>
     </div>
     <div>
       <h4>Hỗ trợ</h4>
@@ -21,6 +22,38 @@
   </div>
   <div class="container footer-bottom">
     <span>© {new Date().getFullYear()} TT Plugins. All rights reserved.</span>
-    <span>Zalo: <a href="https://zalo.me/g/nnukch714" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">Cộng đồng TT Plugins</a> · Hotline: <a href="tel:0365100994" style="color: inherit; text-decoration: underline;">0365 100 994</a></span>
+    <span>
+      Zalo: <a href="https://zalo.me/g/nnukch714" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">Cộng đồng TT Plugins</a> · 
+      Hotline: <a href="tel:0365100994" style="color: inherit; text-decoration: underline;">0365 100 994</a> · 
+      <a href="/portal" id="footer-admin-entry" title="Khu vực Quản trị viên" style="color: #64748b; font-size: 11px; text-decoration: none; opacity: 0.6; margin-left: 4px;">🔒 Quản trị</a>
+    </span>
   </div>
 </footer>
+
+<script>
+  function updateAdminFooter() {
+    const isAdmin = localStorage.getItem('tt_admin_logged_in') === 'true';
+    const footerLinks = document.querySelectorAll('.admin-only-footer-link');
+    const adminEntry = document.getElementById('footer-admin-entry');
+    
+    footerLinks.forEach(el => {
+      (el as HTMLElement).style.display = isAdmin ? 'block' : 'none';
+    });
+
+    if (adminEntry) {
+      if (isAdmin) {
+        adminEntry.textContent = '🟢 Admin Mode';
+        adminEntry.style.color = '#38bdf8';
+        adminEntry.style.opacity = '1';
+      } else {
+        adminEntry.textContent = '🔒 Quản trị';
+        adminEntry.style.color = '#64748b';
+        adminEntry.style.opacity = '0.6';
+      }
+    }
+  }
+
+  window.addEventListener('admin-auth-changed', updateAdminFooter);
+  window.addEventListener('storage', updateAdminFooter);
+  updateAdminFooter();
+</script>

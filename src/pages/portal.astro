@@ -6,18 +6,72 @@ import Footer from "../components/Footer.astro";
 <BaseLayout title="Cổng Upload & Quản trị Plugin — TT Plugins" description="Cổng tải lên, cấu hình và xuất bản plugin SketchUp cho hệ thống TT Plugins Store.">
   <Header />
   <main class="portal-page">
-    <div class="portal-hero">
-      <div class="container">
-        <div class="portal-badge"><span class="pulse"></span> CỔNG QUẢN TRỊ & XUẤT BẢN NỘI BỘ · TT PLUGINS PORTAL</div>
-        <h1>Cổng Upload & Xuất Bản <em>Plugin Store</em></h1>
-        <p class="portal-lead">Tải lên file cài đặt <code>.rbz</code>, cấu hình thông tin mô hình, tương thích SketchUp và tạo file nội dung Markdown chuẩn cho hệ thống phân phối.</p>
-        <div class="portal-tabs-nav">
-          <a href="#quick-form" class="tab-btn active"><span class="material-symbols-rounded">cloud_upload</span> Form Upload Trực Quan</a>
-          <a href="/admin/" target="_blank" rel="noopener noreferrer" class="tab-btn"><span class="material-symbols-rounded">admin_panel_settings</span> Decap CMS (Git) ↗</a>
-          <a href="#guide" class="tab-btn"><span class="material-symbols-rounded">help</span> Hướng Dẫn & Free Web Host</a>
+    <!-- MÀN HÌNH XÁC THỰC QUẢN TRỊ VIÊN (ADMIN GATE) -->
+    <div id="admin-gate-screen" class="gate-screen" style="display:none;">
+      <div class="gate-card">
+        <div class="gate-icon">
+          <span class="material-symbols-rounded">admin_panel_settings</span>
+        </div>
+        <div class="gate-badge">BẢO MẬT HỆ THỐNG · TT PLUGINS</div>
+        <h2>Cổng Quản Trị Viên</h2>
+        <p>Khu vực tải lên và phát hành plugin chỉ dành cho Quản trị viên TT Plugins. Vui lòng nhập mật khẩu quản trị để tiếp tục.</p>
+        
+        <form id="gate-form" class="gate-form" onsubmit="return false;">
+          <div class="gate-input-group">
+            <span class="gate-input-icon"><span class="material-symbols-rounded">key</span></span>
+            <input type="password" id="gate-pass-input" placeholder="Nhập mật khẩu quản trị..." autocomplete="current-password" required />
+          </div>
+          <div id="gate-error-msg" class="gate-error-box" style="display:none;">
+            <span class="material-symbols-rounded">error</span>
+            <span>Mật khẩu quản trị không chính xác. Vui lòng kiểm tra lại!</span>
+          </div>
+          <button type="submit" id="gate-submit-btn" class="gate-btn">
+            <span>Đăng Nhập Cổng Quản Trị</span>
+            <span class="material-symbols-rounded">arrow_forward</span>
+          </button>
+        </form>
+
+        <div class="gate-footer">
+          <a href="/" class="gate-back-link">
+            <span class="material-symbols-rounded">arrow_back</span>
+            <span>Quay lại Trang Chủ</span>
+          </a>
+          <span class="gate-hotline">Hỗ trợ: <a href="tel:0365100994">0365 100 994</a></span>
         </div>
       </div>
     </div>
+
+    <!-- TOÀN BỘ NỘI DUNG UPLOAD & QUẢN TRỊ CHỈ HIỂN THỊ KHI ADMIN ĐÃ XÁC THỰC -->
+    <div id="admin-main-portal" class="main-portal" style="display:none;">
+      <!-- THANH TRẠNG THÁI PHIÊN QUẢN TRỊ -->
+      <div class="container" style="padding-top: 20px;">
+        <div class="admin-session-strip">
+          <div class="session-left">
+            <span class="session-indicator"></span>
+            <span class="material-symbols-rounded" style="font-size:20px; color:#38bdf8;">verified_user</span>
+            <span>Phiên Quản Trị Đang Kích Hoạt · <b>TT Plugins Administrator</b></span>
+          </div>
+          <div class="session-right">
+            <a href="/admin/" target="_blank" rel="noopener noreferrer" class="btn-cms-link">Decap CMS (Git) ↗</a>
+            <button type="button" id="portal-logout-btn" class="btn-portal-logout" title="Đăng xuất và khóa cổng quản trị">
+              <span class="material-symbols-rounded" style="font-size:16px;">logout</span> Đăng xuất
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="portal-hero">
+        <div class="container">
+          <div class="portal-badge"><span class="pulse"></span> CỔNG QUẢN TRỊ & XUẤT BẢN NỘI BỘ · TT PLUGINS PORTAL</div>
+          <h1>Cổng Upload & Xuất Bản <em>Plugin Store</em></h1>
+          <p class="portal-lead">Tải lên file cài đặt <code>.rbz</code>, cấu hình thông tin mô hình, tương thích SketchUp và tạo file nội dung Markdown chuẩn cho hệ thống phân phối.</p>
+          <div class="portal-tabs-nav">
+            <a href="#quick-form" class="tab-btn active"><span class="material-symbols-rounded">cloud_upload</span> Form Upload Trực Quan</a>
+            <a href="/admin/" target="_blank" rel="noopener noreferrer" class="tab-btn"><span class="material-symbols-rounded">admin_panel_settings</span> Decap CMS (Git) ↗</a>
+            <a href="#guide" class="tab-btn"><span class="material-symbols-rounded">help</span> Hướng Dẫn & Free Web Host</a>
+          </div>
+        </div>
+      </div>
 
     <div class="container portal-container" id="quick-form">
       <div class="portal-layout">
@@ -248,6 +302,22 @@ slug: "tt-plugin-starter"
         </div>
       </section>
     </div>
+    </div> <!-- end #admin-main-portal -->
+
+    <script is:inline>
+      (function() {
+        const isAuth = localStorage.getItem('tt_admin_logged_in') === 'true';
+        const gate = document.getElementById('admin-gate-screen');
+        const main = document.getElementById('admin-main-portal');
+        if (isAuth) {
+          if (main) main.style.display = 'block';
+          if (gate) gate.style.display = 'none';
+        } else {
+          if (gate) gate.style.display = 'flex';
+          if (main) main.style.display = 'none';
+        }
+      })();
+    </script>
   </main>
   <Footer />
 
@@ -490,6 +560,58 @@ slug: "tt-plugin-starter"
         statusBanner.innerHTML = `<strong>Chưa kết nối Local Server:</strong> Chạy <code>npm run upload-server</code> để mở cổng ghi file trực tiếp. Hoặc bấm <strong>"Tải file .md"</strong> rồi lưu vào <code>src/content/plugins/${slug}.md</code>.`;
       }
     });
+
+    // XỬ LÝ XÁC THỰC QUẢN TRỊ VIÊN (ADMIN GATE)
+    const gateForm = document.getElementById('gate-form');
+    const gatePassInput = document.getElementById('gate-pass-input') as HTMLInputElement | null;
+    const gateErrorMsg = document.getElementById('gate-error-msg') as HTMLElement | null;
+    const gateScreen = document.getElementById('admin-gate-screen') as HTMLElement | null;
+    const mainPortal = document.getElementById('admin-main-portal') as HTMLElement | null;
+    const portalLogoutBtn = document.getElementById('portal-logout-btn');
+
+    const VALID_PASSWORDS = ['admin@ttplugins2026', 'ttplugins@2026', '0365100994'];
+
+    function syncAuthState() {
+      const isAuth = localStorage.getItem('tt_admin_logged_in') === 'true';
+      if (isAuth) {
+        if (gateScreen) gateScreen.style.display = 'none';
+        if (mainPortal) mainPortal.style.display = 'block';
+      } else {
+        if (gateScreen) gateScreen.style.display = 'flex';
+        if (mainPortal) mainPortal.style.display = 'none';
+      }
+    }
+
+    function handleGateLogin(e?: Event) {
+      if (e) e.preventDefault();
+      const enteredPass = (gatePassInput?.value || '').trim();
+      if (VALID_PASSWORDS.includes(enteredPass)) {
+        localStorage.setItem('tt_admin_logged_in', 'true');
+        if (gateErrorMsg) gateErrorMsg.style.display = 'none';
+        if (gatePassInput) gatePassInput.value = '';
+        window.dispatchEvent(new Event('admin-auth-changed'));
+        syncAuthState();
+      } else {
+        if (gateErrorMsg) gateErrorMsg.style.display = 'flex';
+        if (gatePassInput) {
+          gatePassInput.focus();
+          gatePassInput.select();
+        }
+      }
+    }
+
+    gateForm?.addEventListener('submit', handleGateLogin);
+    document.getElementById('gate-submit-btn')?.addEventListener('click', handleGateLogin);
+
+    portalLogoutBtn?.addEventListener('click', () => {
+      localStorage.removeItem('tt_admin_logged_in');
+      sessionStorage.removeItem('tt_admin_session');
+      window.dispatchEvent(new Event('admin-auth-changed'));
+      syncAuthState();
+    });
+
+    window.addEventListener('admin-auth-changed', syncAuthState);
+    syncAuthState();
 
     // Khởi tạo ban đầu
     updateMarkdown();
@@ -1046,5 +1168,249 @@ slug: "tt-plugin-starter"
 
   .guide-box li {
     margin-bottom: 6px;
+  }
+
+  /* ADMIN GATE SCREEN */
+  .gate-screen {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: radial-gradient(circle at 50% 20%, #eff6ff 0%, #f8fafc 100%);
+  }
+
+  .gate-card {
+    max-width: 460px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 42px 36px;
+    box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+    text-align: center;
+  }
+
+  .gate-icon {
+    width: 68px;
+    height: 68px;
+    background: #e0f2fe;
+    color: #0284c7;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    margin: 0 auto 18px;
+  }
+
+  .gate-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #0369a1;
+    background: #f0f9ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    border: 1px solid #bae6fd;
+  }
+
+  .gate-card h2 {
+    font: 800 24px "Manrope", sans-serif;
+    color: #0f172a;
+    margin: 0 0 10px;
+  }
+
+  .gate-card p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+
+  .gate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .gate-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .gate-input-icon {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .gate-input-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px 0 44px;
+    font-size: 15px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    transition: all .2s;
+    background: #f8fafc;
+  }
+
+  .gate-input-group input:focus {
+    background: #fff;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.12);
+  }
+
+  .gate-btn {
+    height: 48px;
+    background: #0284c7;
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all .2s;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+  }
+
+  .gate-btn:hover {
+    background: #0369a1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
+  }
+
+  .gate-error-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-align: left;
+  }
+
+  .gate-footer {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .gate-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .2s;
+  }
+
+  .gate-back-link:hover {
+    color: #0284c7;
+  }
+
+  .gate-hotline {
+    color: #94a3b8;
+    font-size: 12px;
+  }
+
+  .gate-hotline a {
+    color: #0284c7;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  /* ADMIN SESSION STRIP */
+  .admin-session-strip {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  .session-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .session-indicator {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px #22c55e;
+  }
+
+  .session-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-cms-link {
+    color: #38bdf8;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 6px;
+    transition: .2s;
+  }
+
+  .btn-cms-link:hover {
+    background: rgba(56, 189, 248, 0.1);
+  }
+
+  .btn-portal-logout {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .btn-portal-logout:hover {
+    background: #ef4444;
+    color: #fff;
   }
 </style>
