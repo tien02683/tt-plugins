@@ -37,7 +37,7 @@ npm run build
 ## 2. Đưa mã nguồn lên GitHub
 
 1. Tạo repository tên `tt-plugins`. Nếu muốn tự kiểm soát source, nên để Private.
-2. Sửa `public/admin/config.yml`: thay `YOUR-GITHUB-USERNAME/tt-plugins` bằng owner/repository thật.
+2. Sửa `public/admin/config.yml`: thay `tien02683/tt-plugins` bằng owner/repository thật.
 3. Sửa các placeholder GitHub/email trong Footer và nội dung mẫu.
 4. Chạy:
 
@@ -46,7 +46,7 @@ git init
 git add .
 git commit -m "Initial TT Plugins website"
 git branch -M main
-git remote add origin https://github.com/YOUR-GITHUB-USERNAME/tt-plugins.git
+git remote add origin https://github.com/tien02683/tt-plugins.git
 git push -u origin main
 ```
 

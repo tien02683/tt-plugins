@@ -2,7 +2,7 @@ local_backend: true
 
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/tt-plugins
+  repo: tien02683/tt-plugins
   branch: main
   base_url: https://YOUR-OAUTH-WORKER.YOUR-SUBDOMAIN.workers.dev
   auth_endpoint: auth
